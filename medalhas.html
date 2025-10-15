@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Galeria: Medalhas Personalizadas - SD Laser Design</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css" />
+<style>
+    :root {
+      --brand: #2563EB;
+      --accent: #10B981;
+      --background: #f8fafc;
+      --card: #ffffff;
+      --text-primary: #1e293b;
+      --text-secondary: #64748b;
+      --border-color: #e2e8f0;
+    }
+     html.dark {
+        --background: #0f172a;
+        --card: #1e293b;
+        --text-primary: #f1f5f9;
+        --text-secondary: #94a3b8;
+        --border-color: #334155;
+    }
+    body { font-family: 'Inter', sans-serif; background-color: var(--background); color: var(--text-primary); }
+    .portfolio-card { transition: transform .3s ease, box-shadow .3s ease; }
+    .portfolio-card:hover { transform: translateY(-5px); box-shadow: 0 10px 25px -5px rgba(0,0,0,0.07), 0 8px 10px -6px rgba(0,0,0,0.07); }
+    .dark .portfolio-card:hover { box-shadow: 0 10px 25px -5px rgba(0,0,0,0.15), 0 8px 10px -6px rgba(0,0,0,0.15); }
+    .filter-btn { padding: 8px 18px; border-radius: 9999px; background-color: #f1f5f9; color: var(--text-secondary); border: 1px solid var(--border-color); cursor: pointer; font-weight: 500; transition: all 0.2s; }
+    .dark .filter-btn { background-color: #334155; }
+    .filter-btn:hover { background-color: #e2e8f0; border-color: #cbd5e1; }
+    .dark .filter-btn:hover { background-color: #475569; border-color: #64748b; }
+    .filter-btn.active { background-color: var(--brand); color: white; border-color: var(--brand); }
+    .add-to-cart-btn.added { background-color: var(--accent); cursor: default; }
+    .fade-in { animation: fadeIn 0.3s ease-in-out; }
+    @keyframes fadeIn { from { opacity: 0; transform: scale(0.98); } to { opacity: 1; transform: scale(1); } }
+    #toast { transition: opacity 0.3s ease, transform 0.3s ease, visibility 0.3s ease; visibility: hidden; opacity: 0; transform: translate(-50%, 20px); }
+    #toast.show { visibility: visible; opacity: 1; transform: translate(-50%, 0); }
+    .swiper-slide { width: auto; }
+</style>
+</head>
+<body class="text-slate-800">
+
+<header class="bg-card/80 backdrop-blur-sm shadow-sm sticky top-0 z-50 border-b border-border-color">
+    <nav class="container mx-auto px-4 sm:px-6 py-3 flex justify-between items-center">
+        <a href="Principal_index.html" class="flex items-center space-x-3">
+            <img src="src/img/1-Photoroom.png" alt="Logo SD Laser Design" class="h-12 w-12 rounded-full">
+            <span class="text-xl font-bold text-text-primary">SD Laser Desing</span>
+        </a>
+        <div class="flex items-center space-x-2 sm:space-x-4">
+            <button id="themeToggle" class="p-2 rounded-full hover:bg-slate-200 dark:hover:bg-slate-700 transition-colors" aria-label="Alternar modo de cor">
+              <svg id="theme-icon-light" class="w-5 h-5 text-text-secondary" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"></path></svg>
+              <svg id="theme-icon-dark" class="w-5 h-5 text-text-secondary hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"></path></svg>
+            </button>
+            <a href="carrinho.html" id="cart-link" class="relative text-text-secondary hover:text-blue-600 transition p-2">
+                <svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M2.25 3h1.386c.51 0 .955.343 1.087.835l.383 1.437M7.5 14.25a3 3 0 00-3 3h15.75m-12.75-3h11.218c.51 0 .962-.344 1.087-.835l1.823-6.831a1.5 1.5 0 00-1.423-2.165H4.198M7.5 14.25h11.218M16.5 21a1.5 1.5 0 11-3 0 1.5 1.5 0 013 0zm-9 0a1.5 1.5 0 11-3 0 1.5 1.5 0 013 0z" /></svg>
+                <span id="cart-count" class="absolute -top-1 -right-1 bg-red-500 text-white text-xs w-5 h-5 rounded-full flex items-center justify-center border-2 border-white">0</span>
+            </a>
+            <a href="Principal_index.html" class="hidden sm:block text-sm font-semibold text-blue-600 hover:text-blue-700 transition-colors">&larr; Voltar ao Início</a>
+        </div>
+    </nav>
+</header>
+
+<main class="container mx-auto px-4 sm:px-6 py-12 lg:py-24">
+    <div class="text-center mb-12">
+        <h1 class="text-4xl md:text-5xl font-bold text-text-primary">Galeria de Medalhas</h1>
+        <p class="text-lg text-text-secondary mt-3 max-w-2xl mx-auto">Designs únicos para celebrar cada conquista.</p>
+    </div>
+
+    <section id="filtros" class="mb-12 bg-card p-6 rounded-xl shadow-sm border border-border-color">
+        <div class="relative mb-6">
+            <input type="search" id="search-input" placeholder="Pesquisar por tipo de medalha..." class="w-full pl-12 pr-4 py-3 rounded-lg border border-border-color focus:ring-2 focus:ring-blue-500/50 focus:border-blue-500 transition-shadow text-base bg-transparent">
+            <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
+                <svg class="w-5 h-5 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
+            </div>
+        </div>
+        <h3 class="text-base font-semibold text-text-primary mb-3">Filtrar por material:</h3>
+        <div class="swiper-container filter-carousel relative overflow-hidden">
+            <div class="swiper-wrapper py-1" id="filter-buttons">
+                <div class="swiper-slide"><button class="filter-btn active" data-filter="all">Todas</button></div>
+                <div class="swiper-slide"><button class="filter-btn" data-filter="acrilico">Acrílico</button></div>
+                <div class="swiper-slide"><button class="filter-btn" data-filter="metal">Metal</button></div>
+                <div class="swiper-slide"><button class="filter-btn" data-filter="mdf">MDF</button></div>
+            </div>
+        </div>
+    </section>
+
+    <section id="fotos">
+        <div id="gallery-grid" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+            
+            <div class="portfolio-card bg-card border border-border-color shadow-sm rounded-xl overflow-hidden flex flex-col" data-category="metal" data-name="Medalha Sunshine Beach Volley">
+                <img src="src/img/medalha 1.jpg" alt="Medalha para torneio de Vôlei de Praia" class="w-full h-56 object-cover gallery-img cursor-pointer">
+                <div class="p-4 flex flex-col flex-grow">
+                    <p class="font-semibold text-text-primary">Medalha Sunshine Beach Volley</p>
+                    <p class="text-sm text-text-secondary mt-1 flex-grow">Material: Metal com fita de cetim</p>
+                    <div class="mt-4 pt-4 border-t border-border-color">
+                        <button class="add-to-cart-btn w-full py-2 px-3 rounded-lg font-semibold text-white bg-blue-600 hover:bg-blue-700 transition-all flex items-center justify-center gap-2 text-sm"></button>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        <div id="no-results" class="text-center py-16 hidden">
+            <svg class="mx-auto h-12 w-12 text-slate-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.172 16.172a4 4 0 015.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+            <h3 class="mt-4 text-lg font-semibold text-text-primary">Nenhum resultado encontrado</h3>
+            <p class="mt-1 text-sm text-text-secondary">Tente ajustar sua busca ou filtro.</p>
+        </div>
+    </section>
+</main>
+
+<footer class="bg-card border-t border-border-color py-6 text-center text-sm text-text-secondary mt-16">
+    © <span id="year"></span> SD Laser Design — Todos os direitos reservados.
+</footer>
+
+<div id="image-modal" class="fixed inset-0 bg-slate-900 bg-opacity-70 backdrop-blur-sm z-[999] hidden items-center justify-center p-4 fade-in">
+    <div class="bg-card p-4 rounded-xl shadow-xl max-w-3xl w-full relative">
+        <button id="close-modal-btn" class="absolute -top-4 -right-4 bg-white dark:bg-slate-600 text-slate-600 dark:text-slate-200 hover:text-slate-900 dark:hover:text-white rounded-full h-10 w-10 flex items-center justify-center text-2xl font-bold shadow-lg transition-colors">&times;</button>
+        <img id="modal-img" src="" alt="" class="w-full h-auto max-h-[80vh] object-contain rounded-lg">
+        <p id="modal-caption" class="text-center mt-3 font-semibold text-text-primary"></p>
+    </div>
+</div>
+
+<div id="toast" class="fixed left-1/2 bottom-5 bg-slate-800 text-white py-2 px-5 rounded-full shadow-lg text-sm font-medium"></div>
+
+<a href="https://wa.me/5519997255040?text=Olá!%20Vi%20o%20site%20da%20SD%20Laser%20Design%20e%20gostaria%20de%20um%20orçamento." target="_blank" rel="noopener noreferrer" class="fixed bottom-6 right-6 z-40 flex items-center justify-center h-14 w-14 bg-green-500 rounded-full shadow-lg transition-transform hover:scale-110" aria-label="Fale Conosco no WhatsApp">
+    <svg class="w-8 h-8 text-white" fill="currentColor" viewBox="0 0 24 24"><path d="M16.28 14.53c-.28-.14-1.67-.82-1.92-.92-.25-.09-.44-.14-.62.14-.18.28-.72.92-.88 1.1-.16.18-.32.2-.59.06-.27-.14-1.15-.42-2.19-1.35-.81-.73-1.35-1.63-1.5-1.92-.14-.28-.02-.44.13-.58.13-.13.28-.32.42-.48.14-.16.18-.28.28-.46.09-.18.05-.37-.02-.51s-.62-1.5-.85-2.07c-.23-.57-.46-.49-.62-.5-.16-.02-.34-.02-.53-.02-.18 0-.48.07-.72.35-.25.28-.96.94-1.18 2.22-.22 1.28.66 2.71 1.53 3.65 1.05 1.12 2.33 2.05 4.3 2.86.39.16.7.25.96.32.48.12.92.1.92.1.28 0 .82-.12 1.1-.68.28-.57.28-1.05.2-1.15s-.2-.18-.46-.32zM12 2.04c-5.5 0-9.96 4.46-9.96 9.96 0 1.77.46 3.45 1.28 4.9L2 22l5.25-1.38c1.4.74 2.98 1.18 4.75 1.18h.01c5.5 0 9.96-4.46 9.96-9.96s-4.46-9.96-9.96-9.96z"/></svg>
+</a>
+
+<script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
+<script>
+    // Repetido de trofeus.html para consistência
+    document.addEventListener('DOMContentLoaded', () => {
+        const filterButtonsContainer = document.getElementById('filter-buttons');
+        const galleryItems = document.querySelectorAll('#gallery-grid .portfolio-card');
+        const cartCount = document.getElementById('cart-count');
+        const imageModal = document.getElementById('image-modal');
+        const modalImg = document.getElementById('modal-img');
+        const modalCaption = document.getElementById('modal-caption');
+        const closeModalBtn = document.getElementById('close-modal-btn');
+        const toast = document.getElementById('toast');
+        const searchInput = document.getElementById('search-input');
+        const noResults = document.getElementById('no-results');
+        let cart = JSON.parse(localStorage.getItem('sdCart')) || [];
+        const themeToggle = document.getElementById('themeToggle');
+        const lightIcon = document.getElementById('theme-icon-light');
+        const darkIcon = document.getElementById('theme-icon-dark');
+        const applyTheme = (theme) => {
+            if (theme === 'dark') {
+                document.documentElement.classList.add('dark');
+                lightIcon.classList.add('hidden');
+                darkIcon.classList.remove('hidden');
+            } else {
+                document.documentElement.classList.remove('dark');
+                lightIcon.classList.remove('hidden');
+                darkIcon.classList.add('hidden');
+            }
+        };
+        themeToggle.addEventListener('click', () => {
+            const newTheme = document.documentElement.classList.contains('dark') ? 'light' : 'dark';
+            localStorage.setItem('theme', newTheme);
+            applyTheme(newTheme);
+        });
+        applyTheme(localStorage.getItem('theme') || (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'));
+        const addedButtonHTML = `<svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke-width="3" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5" /></svg> Adicionado`;
+        const addButtonHTML = `<svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" /></svg> Adicionar`;
+        const showToast = (message) => {
+            toast.textContent = message;
+            toast.classList.add('show');
+            setTimeout(() => toast.classList.remove('show'), 2500);
+        };
+        const updateCartCounter = () => {
+            const totalItems = cart.reduce((sum, item) => sum + (item.quantity || 0), 0);
+            cartCount.textContent = totalItems;
+            cartCount.classList.toggle('hidden', totalItems === 0);
+        };
+        const saveCart = () => {
+            localStorage.setItem('sdCart', JSON.stringify(cart));
+            updateCartCounter();
+        };
+        function initProductCards() {
+            galleryItems.forEach(card => {
+                const name = card.dataset.name;
+                const button = card.querySelector('.add-to-cart-btn');
+                const image = card.querySelector('.gallery-img');
+                const updateButtonState = () => {
+                    const itemInCart = cart.some(item => item.name === name);
+                    if (itemInCart) {
+                        button.innerHTML = addedButtonHTML;
+                        button.classList.add('added');
+                        button.disabled = true;
+                    } else {
+                        button.innerHTML = addButtonHTML;
+                        button.classList.remove('added');
+                        button.disabled = false;
+                    }
+                };
+                button.onclick = () => {
+                    if (cart.some(item => item.name === name)) return;
+                    const material = card.querySelector('p.text-sm').textContent.replace('Material: ', '');
+                    const imageUrl = card.querySelector('img').src;
+                    cart.push({ name, material, imageUrl, quantity: 1 });
+                    saveCart();
+                    updateButtonState();
+                    showToast('Adicionado ao orçamento!');
+                };
+                image.onclick = () => openImageModal(card);
+                updateButtonState();
+            });
+        }
+        const openImageModal = (productCard) => {
+            const img = productCard.querySelector('img');
+            modalImg.src = img.src;
+            modalImg.alt = img.alt;
+            modalCaption.textContent = img.alt;
+            imageModal.classList.remove('hidden');
+        };
+        const closeImageModal = () => imageModal.classList.add('hidden');
+        closeModalBtn.addEventListener('click', closeImageModal);
+        imageModal.addEventListener('click', e => { if (e.target === imageModal) closeImageModal(); });
+        document.addEventListener('keydown', e => { if (e.key === 'Escape' && !imageModal.classList.contains('hidden')) closeImageModal(); });
+        function filterProducts() {
+            const activeCategory = document.querySelector('.filter-btn.active').dataset.filter;
+            const searchTerm = searchInput.value.toLowerCase().trim();
+            let visibleItems = 0;
+            galleryItems.forEach(item => {
+                const itemCategory = item.dataset.category;
+                const itemName = item.dataset.name.toLowerCase();
+                const categoryMatch = activeCategory === 'all' || itemCategory === activeCategory;
+                const searchMatch = itemName.includes(searchTerm);
+                if (categoryMatch && searchMatch) {
+                    item.style.display = 'flex';
+                    visibleItems++;
+                } else {
+                    item.style.display = 'none';
+                }
+            });
+            noResults.classList.toggle('hidden', visibleItems > 0);
+        }
+        filterButtonsContainer.addEventListener('click', (e) => {
+            if(e.target.matches('.filter-btn')) {
+                filterButtonsContainer.querySelector('.filter-btn.active').classList.remove('active');
+                e.target.classList.add('active');
+                filterProducts();
+            }
+        });
+        searchInput.addEventListener('input', filterProducts);
+        document.getElementById('year').textContent = new Date().getFullYear();
+        new Swiper('.filter-carousel', { slidesPerView: 'auto', spaceBetween: 10, freeMode: true });
+        updateCartCounter();
+        initProductCards();
+    });
+</script>
+</body>
+</html>

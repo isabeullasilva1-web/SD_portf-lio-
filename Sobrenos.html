@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sobre Nós - SD Laser Design</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Poppins:wght@600;700;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+          --brand: #2563EB;
+          --accent: #10B981;
+          --background: #f8fafc;
+          --card: #ffffff;
+          --text-primary: #1e293b;
+          --text-secondary: #64748b;
+          --border-color: #e2e8f0;
+        }
+        html.dark {
+            --background: #0f172a;
+            --card: #1e293b;
+            --text-primary: #f1f5f9;
+            --text-secondary: #94a3b8;
+            --border-color: #334155;
+        }
+        body { 
+            font-family: 'Inter', sans-serif; 
+            background-color: var(--background);
+            color: var(--text-primary);
+        }
+        h1, h2, h3, h4 { font-family: 'Poppins', sans-serif; }
+    </style>
+</head>
+<body class="antialiased">
+
+    <header class="bg-card/80 backdrop-blur-sm shadow-sm sticky top-0 z-50 border-b border-border-color">
+        <nav class="container mx-auto px-4 sm:px-6 py-3 flex justify-between items-center">
+            <a href="Principal_index.html" class="flex items-center space-x-3">
+                <img src="src/img/1-Photoroom.png" alt="Logo SD Laser Design" class="h-12 w-12 rounded-full">
+                <span class="text-xl font-bold text-text-primary">SD Laser Desing</span>
+            </a>
+            <div class="flex items-center space-x-2 sm:space-x-4">
+                <button id="themeToggle" class="p-2 rounded-full hover:bg-slate-200 dark:hover:bg-slate-700 transition-colors" aria-label="Alternar modo de cor">
+                  <svg id="theme-icon-light" class="w-5 h-5 text-text-secondary" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"></path></svg>
+                  <svg id="theme-icon-dark" class="w-5 h-5 text-text-secondary hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"></path></svg>
+                </button>
+                <a href="carrinho.html" id="cart-link" class="relative text-text-secondary hover:text-blue-600 transition p-2">
+                    <svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M2.25 3h1.386c.51 0 .955.343 1.087.835l.383 1.437M7.5 14.25a3 3 0 00-3 3h15.75m-12.75-3h11.218c.51 0 .962-.344 1.087-.835l1.823-6.831a1.5 1.5 0 00-1.423-2.165H4.198M7.5 14.25h11.218M16.5 21a1.5 1.5 0 11-3 0 1.5 1.5 0 013 0zm-9 0a1.5 1.5 0 11-3 0 1.5 1.5 0 013 0z" /></svg>
+                    <span id="cart-count" class="absolute -top-1 -right-1 bg-red-500 text-white text-xs w-5 h-5 rounded-full flex items-center justify-center border-2 border-white">0</span>
+                </a>
+                <a href="Principal_index.html" class="hidden sm:block text-sm font-semibold text-blue-600 hover:text-blue-700 transition-colors">&larr; Voltar ao Início</a>
+            </div>
+        </nav>
+    </header>
+
+    <main class="container mx-auto px-6 py-16">
+        <section class="text-center mb-16">
+            <h1 class="text-4xl md:text-5xl font-bold text-text-primary">Nossa Paixão é Premiar a Sua Conquista</h1>
+            <p class="text-text-secondary mt-4 max-w-3xl mx-auto text-lg">Conheça a história e os valores que nos movem a criar peças únicas e memoráveis.</p>
+        </section>
+
+        <section class="mb-20 flex flex-col lg:flex-row items-center gap-12">
+            <div class="lg:w-1/2">
+                <img src="src/img/SD.png" alt="Logo da SD Laser Design" class="rounded-2xl shadow-xl w-full max-w-lg mx-auto">
+            </div>
+            <div class="lg:w-1/2">
+                <h2 class="text-3xl font-bold text-text-primary mb-4 border-l-4 border-blue-600 pl-4">Nossa História</h2>
+                <p class="text-text-secondary mb-4 text-base leading-relaxed">
+                    Fundada com a paixão por design e a precisão da tecnologia a laser, a SD Laser Design nasceu do desejo de transformar ideias em reconhecimento tangível. Somos especialistas em gravação e corte a laser, utilizando equipamentos de ponta para criar troféus, medalhas e premiações que contam uma história de sucesso.
+                </p>
+                <p class="text-text-secondary text-base leading-relaxed">
+                    Cada peça é tratada com o máximo cuidado, desde o conceito inicial e a seleção dos melhores materiais até o acabamento final, garantindo um produto que não apenas premia, mas também inspira e perdura na memória.
+                </p>
+            </div>
+        </section>
+
+        <section class="mb-20">
+             <div class="grid grid-cols-1 md:grid-cols-3 gap-8 text-center">
+                <div class="bg-card p-8 rounded-xl shadow-sm border border-border-color">
+                    <h3 class="text-2xl font-bold text-blue-600 mb-3">Missão</h3>
+                    <p class="text-text-secondary">Oferecer soluções criativas e de alta qualidade em premiações, celebrando as conquistas dos nossos clientes com produtos que superem suas expectativas.</p>
+                </div>
+                <div class="bg-card p-8 rounded-xl shadow-sm border border-border-color">
+                    <h3 class="text-2xl font-bold text-blue-600 mb-3">Visão</h3>
+                    <p class="text-text-secondary">Ser referência no mercado de design a laser, reconhecida pela inovação, excelência no atendimento e compromisso com a satisfação do cliente.</p>
+                </div>
+                <div class="bg-card p-8 rounded-xl shadow-sm border border-border-color">
+                    <h3 class="text-2xl font-bold text-blue-600 mb-3">Valores</h3>
+                    <p class="text-text-secondary">Qualidade, Criatividade, Pontualidade, Parceria e Paixão pelo que fazemos.</p>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="bg-card border-t border-border-color py-6 text-center text-sm text-text-secondary mt-16">
+      © <span id="year"></span> SD Laser Design — Todos os direitos reservados.
+    </footer>
+    
+     <a href="https://wa.me/5519997255040?text=Olá!%20Vi%20o%20site%20da%20SD%20Laser%20Design%20e%20gostaria%20de%20um%20orçamento." target="_blank" rel="noopener noreferrer" class="fixed bottom-6 right-6 z-40 flex items-center justify-center h-14 w-14 bg-green-500 rounded-full shadow-lg transition-transform hover:scale-110" aria-label="Fale Conosco no WhatsApp">
+        <svg class="w-8 h-8 text-white" fill="currentColor" viewBox="0 0 24 24"><path d="M16.28 14.53c-.28-.14-1.67-.82-1.92-.92-.25-.09-.44-.14-.62.14-.18.28-.72.92-.88 1.1-.16.18-.32.2-.59.06-.27-.14-1.15-.42-2.19-1.35-.81-.73-1.35-1.63-1.5-1.92-.14-.28-.02-.44.13-.58.13-.13.28-.32.42-.48.14-.16.18-.28.28-.46.09-.18.05-.37-.02-.51s-.62-1.5-.85-2.07c-.23-.57-.46-.49-.62-.5-.16-.02-.34-.02-.53-.02-.18 0-.48.07-.72.35-.25.28-.96.94-1.18 2.22-.22 1.28.66 2.71 1.53 3.65 1.05 1.12 2.33 2.05 4.3 2.86.39.16.7.25.96.32.48.12.92.1.92.1.28 0 .82-.12 1.1-.68.28-.57.28-1.05.2-1.15s-.2-.18-.46-.32zM12 2.04c-5.5 0-9.96 4.46-9.96 9.96 0 1.77.46 3.45 1.28 4.9L2 22l5.25-1.38c1.4.74 2.98 1.18 4.75 1.18h.01c5.5 0 9.96-4.46 9.96-9.96s-4.46-9.96-9.96-9.96z"/></svg>
+    </a>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            document.getElementById('year').textContent = new Date().getFullYear();
+
+            // --- Theme Toggle ---
+            const themeToggle = document.getElementById('themeToggle');
+            const lightIcon = document.getElementById('theme-icon-light');
+            const darkIcon = document.getElementById('theme-icon-dark');
+            const applyTheme = (theme) => {
+                if (theme === 'dark') {
+                    document.documentElement.classList.add('dark');
+                    lightIcon.classList.add('hidden');
+                    darkIcon.classList.remove('hidden');
+                } else {
+                    document.documentElement.classList.remove('dark');
+                    lightIcon.classList.remove('hidden');
+                    darkIcon.classList.add('hidden');
+                }
+            };
+            themeToggle.addEventListener('click', () => {
+                const newTheme = document.documentElement.classList.contains('dark') ? 'light' : 'dark';
+                localStorage.setItem('theme', newTheme);
+                applyTheme(newTheme);
+            });
+            applyTheme(localStorage.getItem('theme') || (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'));
+
+            // --- Cart Counter ---
+            const cartCount = document.getElementById('cart-count');
+            const updateCartCounter = () => {
+                const cart = JSON.parse(localStorage.getItem('sdCart')) || [];
+                const totalItems = cart.reduce((sum, item) => sum + (item.quantity || 0), 0);
+                cartCount.textContent = totalItems;
+                cartCount.classList.toggle('hidden', totalItems === 0);
+            };
+            updateCartCounter();
+            window.addEventListener('storage', updateCartCounter);
+        });
+    </script>
+</body>
+</html>

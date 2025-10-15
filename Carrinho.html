@@ -1,0 +1,422 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Carrinho de Pré-Orçamento - SD Laser Design</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --brand: #2563EB;
+      --accent: #25D366;
+      --background: #f8fafc; /* slate-50 */
+      --card: #ffffff;
+      --text-primary: #1e293b; /* slate-800 */
+      --text-secondary: #64748b; /* slate-500 */
+      --border-color: #e2e8f0; /* slate-200 */
+    }
+    html.dark {
+        --background: #0f172a; /* slate-900 */
+        --card: #1e293b; /* slate-800 */
+        --text-primary: #f1f5f9; /* slate-100 */
+        --text-secondary: #94a3b8; /* slate-400 */
+        --border-color: #334155; /* slate-700 */
+    }
+    body {
+      font-family: 'Inter', sans-serif;
+      background-color: var(--background);
+      color: var(--text-primary);
+    }
+    input, select, textarea {
+        background-color: transparent;
+    }
+    input:focus, select:focus, textarea:focus {
+      --tw-ring-color: rgba(37, 99, 235, 0.5);
+      --tw-ring-offset-shadow: var(--tw-ring-inset) 0 0 0 var(--tw-ring-offset-width) var(--tw-ring-offset-color);
+      --tw-ring-shadow: var(--tw-ring-inset) 0 0 0 calc(2px + var(--tw-ring-offset-width)) var(--tw-ring-color);
+      box-shadow: var(--tw-ring-offset-shadow), var(--tw-ring-shadow), var(--tw-shadow, 0 0 #0000);
+      border-color: var(--brand);
+    }
+    .fade-in { animation: fadeIn 0.3s ease-in-out; }
+    @keyframes fadeIn { from { opacity: 0; transform: scale(0.98); } to { opacity: 1; transform: scale(1); } }
+    .fixed-checkout {
+      position: fixed;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      padding: 0.75rem;
+      background: rgba(255, 255, 255, 0.85);
+      box-shadow: 0 -8px 24px rgba(0,0,0,0.07);
+      backdrop-filter: blur(8px);
+      z-index: 40;
+      border-top: 1px solid var(--border-color);
+    }
+    .dark .fixed-checkout {
+        background: rgba(15, 23, 42, 0.85); /* slate-900 */
+    }
+    .spinner {
+      border: 2px solid #e2e8f0;
+      border-top: 2px solid var(--brand);
+      border-radius: 50%;
+      width: 16px;
+      height: 16px;
+      animation: spin 1s linear infinite;
+    }
+    @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+    input[type=number]::-webkit-inner-spin-button, 
+    input[type=number]::-webkit-outer-spin-button { -webkit-appearance: none; margin: 0; }
+    input[type=number] { -moz-appearance: textfield; }
+  </style>
+</head>
+
+<body class="flex flex-col min-h-screen">
+
+  <header class="bg-card/80 backdrop-blur-sm shadow-sm sticky top-0 z-20 border-b border-border-color">
+    <nav class="container mx-auto px-4 sm:px-6 py-3 flex justify-between items-center">
+      <a href="Principal_index.html" class="flex items-center space-x-3">
+        <img src="src/img/1-Photoroom.png" alt="Logo SD Laser Design" class="h-12 w-12 rounded-full">
+        <span class="text-xl font-bold text-text-primary">SD Laser Desing</span>
+      </a>
+      <div class="flex items-center gap-2">
+        <button id="themeToggle" class="p-2 rounded-full hover:bg-slate-200 dark:hover:bg-slate-700 transition-colors" aria-label="Alternar modo de cor">
+            <svg id="theme-icon-light" class="w-5 h-5 text-text-secondary" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"></path></svg>
+            <svg id="theme-icon-dark" class="w-5 h-5 text-text-secondary hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"></path></svg>
+        </button>
+         <a href="trofeus.html" class="text-sm font-semibold text-blue-600 hover:text-blue-700 transition-colors">
+            &larr; Continuar pré-orçamento
+        </a>
+      </div>
+    </nav>
+  </header>
+
+  <main class="container mx-auto px-4 py-8 lg:py-12 flex-1">
+    <h1 class="text-3xl md:text-4xl font-bold text-text-primary mb-8 text-center md:text-left">Seu Pré-Orçamento</h1>
+
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-8 lg:gap-12 items-start">
+      <section class="lg:col-span-2 space-y-6">
+        <div class="bg-card p-6 rounded-xl shadow-sm border border-border-color">
+            <h2 class="text-xl font-bold mb-4 text-text-primary">Itens Selecionados</h2>
+            <div id="cart-items-list" class="divide-y divide-border-color"></div>
+        </div>
+
+        <div id="empty-cart-message" class="text-center py-16 bg-card rounded-xl border border-dashed border-border-color fade-in hidden">
+          <svg class="mx-auto h-16 w-16 text-slate-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true" stroke-width="1.5">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 3h1.386c.51 0 .955.343 1.087.835l.383 1.437M7.5 14.25a3 3 0 00-3 3h15.75m-12.75-3h11.218c.51 0 .962-.344 1.087-.835l1.823-6.831a1.5 1.5 0 00-1.423-2.165H4.198M7.5 14.25h11.218M16.5 21a1.5 1.5 0 11-3 0 1.5 1.5 0 013 0zm-9 0a1.5 1.5 0 11-3 0 1.5 1.5 0 013 0z" />
+          </svg>
+          <h3 class="mt-4 text-lg font-semibold text-text-primary">Seu carrinho está vazio</h3>
+          <p class="mt-1 text-sm text-text-secondary">Explore nossos produtos para adicionar itens ao seu pré-orçamento.</p>
+        </div>
+      </section>
+
+      <aside class="lg:col-span-1 lg:sticky lg:top-28 space-y-6">
+        <div class="bg-card p-6 rounded-xl shadow-sm border border-border-color">
+            <h2 class="text-xl font-bold mb-4 text-text-primary">Suas Informações</h2>
+            
+            <form id="customer-info-form" class="space-y-4" novalidate>
+                <div>
+                    <label for="nome" class="text-sm font-medium text-text-secondary">Nome / Razão Social *</label>
+                    <input type="text" id="nome" class="mt-1 w-full p-2.5 border border-border-color rounded-lg text-sm" required>
+                </div>
+                <div>
+                    <label for="email" class="text-sm font-medium text-text-secondary">E-mail *</label>
+                    <input type="email" id="email" class="mt-1 w-full p-2.5 border border-border-color rounded-lg text-sm" required>
+                </div>
+                <div class="grid grid-cols-2 gap-4">
+                    <div>
+                        <label for="cpf_cnpj" class="text-sm font-medium text-text-secondary">CPF / CNPJ *</label>
+                        <input type="text" id="cpf_cnpj" class="mt-1 w-full p-2.5 border border-border-color rounded-lg text-sm" required inputmode="numeric" />
+                    </div>
+                    <div>
+                        <label for="ie" class="text-sm font-medium text-text-secondary">Inscrição Estadual</label>
+                        <input type="text" id="ie" class="mt-1 w-full p-2.5 border border-border-color rounded-lg text-sm" />
+                    </div>
+                </div>
+            </form>
+            
+            <div class="mt-6 pt-6 border-t border-border-color">
+                <h3 class="text-lg font-bold text-text-primary">Endereço de Entrega</h3>
+                <form id="address-form" class="mt-4 space-y-4" novalidate>
+                    <div class="grid grid-cols-3 gap-4">
+                        <div class="col-span-2 relative">
+                            <label for="cep" class="text-sm font-medium text-text-secondary">CEP *</label>
+                            <input type="text" id="cep" class="mt-1 w-full p-2.5 border border-border-color rounded-lg text-sm" required inputmode="numeric" />
+                            <div id="cep-spinner" class="spinner absolute right-3 top-[calc(50%+6px)] -translate-y-1/2 hidden"></div>
+                        </div>
+                        <div>
+                            <label for="numero" class="text-sm font-medium text-text-secondary">Número *</label>
+                            <input type="text" id="numero" class="mt-1 w-full p-2.5 border border-border-color rounded-lg text-sm" required />
+                        </div>
+                    </div>
+                    <div>
+                        <label for="rua" class="text-sm font-medium text-text-secondary">Rua, Avenida, etc. *</label>
+                        <input type="text" id="rua" class="mt-1 w-full p-2.5 border border-border-color rounded-lg text-sm" required>
+                    </div>
+                    <div>
+                        <label for="bairro" class="text-sm font-medium text-text-secondary">Bairro *</label>
+                        <input type="text" id="bairro" class="mt-1 w-full p-2.5 border border-border-color rounded-lg text-sm" required>
+                    </div>
+                    <div class="grid grid-cols-3 gap-4">
+                        <div class="col-span-2">
+                            <label for="cidade" class="text-sm font-medium text-text-secondary">Cidade *</label>
+                            <input type="text" id="cidade" class="mt-1 w-full p-2.5 border border-border-color rounded-lg text-sm" required>
+                        </div>
+                        <div>
+                            <label for="estado" class="text-sm font-medium text-text-secondary">UF *</label>
+                            <input type="text" id="estado" class="mt-1 w-full p-2.5 border border-border-color rounded-lg text-sm" required maxlength="2">
+                        </div>
+                    </div>
+                </form>
+            </div>
+
+            <div class="mt-4 pt-4 border-t border-border-color">
+                <label class="flex items-center space-x-2 text-sm text-text-secondary cursor-pointer">
+                <input type="checkbox" id="same-address" class="h-4 w-4 rounded text-blue-600 border-gray-300 focus:ring-blue-500" checked>
+                <span>Endereço de faturamento é o mesmo.</span>
+                </label>
+            </div>
+
+            <div id="billing-address-container" class="hidden mt-4 pt-4 border-t border-border-color">
+                <h3 class="text-lg font-bold mb-3 text-text-primary">Endereço de Faturamento</h3>
+                <form id="billing-address-form" class="space-y-4" novalidate>
+                     <div class="grid grid-cols-3 gap-4">
+                        <div class="col-span-2 relative">
+                            <label for="cep-billing" class="text-sm font-medium text-text-secondary">CEP *</label>
+                            <input type="text" id="cep-billing" class="mt-1 w-full p-2.5 border border-border-color rounded-lg text-sm" inputmode="numeric" />
+                            <div id="cep-billing-spinner" class="spinner absolute right-3 top-[calc(50%+6px)] -translate-y-1/2 hidden"></div>
+                        </div>
+                        <div>
+                            <label for="numero-billing" class="text-sm font-medium text-text-secondary">Número *</label>
+                            <input type="text" id="numero-billing" class="mt-1 w-full p-2.5 border border-border-color rounded-lg text-sm" />
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <div class="hidden lg:block space-y-3">
+          <button id="checkout-btn-desktop" class="w-full bg-green-500 hover:bg-green-600 text-white py-3 px-4 rounded-lg font-semibold shadow-sm hover:shadow-md transition-all flex items-center justify-center gap-2.5 text-base transform hover:scale-[1.02]">
+            <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M16.28 14.53c-.28-.14-1.67-.82-1.92-.92-.25-.09-.44-.14-.62.14-.18.28-.72.92-.88 1.1-.16.18-.32.2-.59.06-.27-.14-1.15-.42-2.19-1.35-.81-.73-1.35-1.63-1.5-1.92-.14-.28-.02-.44.13-.58.13-.13.28-.32.42-.48.14-.16.18-.28.28-.46.09-.18.05-.37-.02-.51s-.62-1.5-.85-2.07c-.23-.57-.46-.49-.62-.5-.16-.02-.34-.02-.53-.02-.18 0-.48.07-.72.35-.25.28-.96.94-1.18 2.22-.22 1.28.66 2.71 1.53 3.65 1.05 1.12 2.33 2.05 4.3 2.86.39.16.7.25.96.32.48.12.92.1.92.1.28 0 .82-.12 1.1-.68.28-.57.28-1.05.2-1.15s-.2-.18-.46-.32zM12 2.04c-5.5 0-9.96 4.46-9.96 9.96 0 1.77.46 3.45 1.28 4.9L2 22l5.25-1.38c1.4.74 2.98 1.18 4.75 1.18h.01c5.5 0 9.96-4.46 9.96-9.96s-4.46-9.96-9.96-9.96z"/></svg>
+            Finalizar Pré-Orçamento
+          </button>
+          <button id="clear-cart-btn-desktop" class="w-full text-center text-sm font-semibold text-red-600 hover:bg-red-500/10 rounded-lg py-2 transition-colors">
+            Esvaziar Carrinho
+          </button>
+        </div>
+      </aside>
+    </div>
+  </main>
+
+  <div class="lg:hidden fixed-checkout">
+    <div class="container mx-auto px-4 flex gap-3">
+      <button id="checkout-btn-mobile" class="flex-1 bg-green-500 hover:bg-green-600 text-white py-3 rounded-xl font-semibold shadow-lg transition">Finalizar</button>
+      <button id="clear-cart-btn-mobile" class="w-28 border border-border-color bg-card text-red-600 py-3 rounded-xl font-semibold hover:bg-red-500/10 transition text-sm shadow-sm">Esvaziar</button>
+    </div>
+  </div>
+
+  <footer class="bg-card border-t border-border-color py-6 text-center text-sm text-text-secondary mt-16">
+    © <span id="current-year"></span> SD Laser Desing — Todos os direitos reservados.
+  </footer>
+
+  <div id="custom-modal" class="fixed inset-0 bg-slate-900 bg-opacity-60 flex items-center justify-center p-4 z-50 hidden fade-in">
+    <div class="relative w-full max-w-md mx-auto p-6 shadow-xl rounded-xl bg-card">
+      <div class="text-center">
+        <h3 id="modal-title" class="text-xl leading-6 font-bold text-text-primary"></h3>
+        <div class="mt-3">
+          <p id="modal-message" class="text-sm text-text-secondary"></p>
+        </div>
+        <div id="modal-buttons" class="mt-6 flex justify-center gap-3"></div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const WHATSAPP_NUMBER = '5519997255040';
+      const cartList = document.getElementById('cart-items-list');
+      const emptyCart = document.getElementById('empty-cart-message');
+      const checkoutBtns = [document.getElementById('checkout-btn-desktop'), document.getElementById('checkout-btn-mobile')];
+      const clearBtns = [document.getElementById('clear-cart-btn-desktop'), document.getElementById('clear-cart-btn-mobile')];
+      const customerForm = document.getElementById('customer-info-form');
+      const addressForm = document.getElementById('address-form');
+      const billingForm = document.getElementById('billing-address-form');
+      const sameAddress = document.getElementById('same-address');
+      const billingContainer = document.getElementById('billing-address-container');
+      const modalEl = document.getElementById('custom-modal');
+      const modalTitle = document.getElementById('modal-title');
+      const modalMessage = document.getElementById('modal-message');
+      const modalButtons = document.getElementById('modal-buttons');
+      let cart = JSON.parse(localStorage.getItem('sdCart')) || [];
+
+      const themeToggle = document.getElementById('themeToggle');
+      const lightIcon = document.getElementById('theme-icon-light');
+      const darkIcon = document.getElementById('theme-icon-dark');
+      const applyTheme = (theme) => {
+        if (theme === 'dark') {
+            document.documentElement.classList.add('dark');
+            lightIcon.classList.add('hidden');
+            darkIcon.classList.remove('hidden');
+        } else {
+            document.documentElement.classList.remove('dark');
+            lightIcon.classList.remove('hidden');
+            darkIcon.classList.add('hidden');
+        }
+      };
+      themeToggle.addEventListener('click', () => {
+        const newTheme = document.documentElement.classList.contains('dark') ? 'light' : 'dark';
+        localStorage.setItem('theme', newTheme);
+        applyTheme(newTheme);
+      });
+      applyTheme(localStorage.getItem('theme') || (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'));
+
+      let modalResolve = null;
+      const showModal = () => modalEl.classList.remove('hidden');
+      const hideModal = () => modalEl.classList.add('hidden');
+      modalEl.addEventListener('click', (e) => { if (e.target === modalEl) { hideModal(); if (modalResolve) modalResolve(false); } });
+      function createModal(title, message, buttons) {
+          modalTitle.textContent = title;
+          modalMessage.innerHTML = message;
+          modalButtons.innerHTML = '';
+          buttons.forEach(btn => modalButtons.appendChild(btn));
+          showModal();
+          return new Promise(resolve => { modalResolve = resolve; });
+      }
+      function showAlert(title, message) {
+          const okButton = document.createElement('button');
+          okButton.textContent = 'Entendi';
+          okButton.className = 'w-full bg-blue-600 text-white font-semibold py-2 px-4 rounded-lg hover:bg-blue-700 transition';
+          okButton.onclick = () => { hideModal(); modalResolve(true); };
+          return createModal(title, message, [okButton]);
+      }
+      function showConfirm(title, message) {
+          const confirmButton = document.createElement('button');
+          confirmButton.textContent = 'Confirmar';
+          confirmButton.className = 'flex-1 bg-red-600 text-white font-semibold py-2 px-4 rounded-lg hover:bg-red-700 transition';
+          confirmButton.onclick = () => { hideModal(); modalResolve(true); };
+          const cancelButton = document.createElement('button');
+          cancelButton.textContent = 'Cancelar';
+          cancelButton.className = 'flex-1 bg-slate-200 text-slate-800 font-semibold py-2 px-4 rounded-lg hover:bg-slate-300 transition dark:bg-slate-600 dark:text-slate-200 dark:hover:bg-slate-700';
+          cancelButton.onclick = () => { hideModal(); modalResolve(false); };
+          return createModal(title, message, [cancelButton, confirmButton]);
+      }
+
+      const saveCart = () => localStorage.setItem('sdCart', JSON.stringify(cart));
+      function showEmpty(isEmpty) {
+        emptyCart.classList.toggle('hidden', !isEmpty);
+        checkoutBtns.forEach(b => { if(!b) return; b.disabled = isEmpty; b.classList.toggle('opacity-50', isEmpty); b.classList.toggle('cursor-not-allowed', isEmpty); });
+        clearBtns.forEach(b => b && b.classList.toggle('hidden', isEmpty));
+      }
+      function renderCart() {
+        cartList.innerHTML = '';
+        if (!cart || cart.length === 0) { showEmpty(true); return; }
+        showEmpty(false);
+        cart.forEach((item, i) => {
+          const itemQuantity = item.quantity || 1;
+          const el = document.createElement('div');
+          el.className = 'flex flex-col sm:flex-row items-start sm:items-center justify-between py-4 gap-4 fade-in';
+          el.innerHTML = `<div class="flex items-center gap-4 w-full sm:w-auto"><img src="${item.imageUrl}" alt="${escapeHtml(item.name)}" class="w-20 h-20 object-cover rounded-lg border border-border-color flex-shrink-0"><div class="flex-1"><p class="font-semibold text-text-primary">${escapeHtml(item.name)}</p><p class="text-sm text-text-secondary">${escapeHtml(item.material || '')}</p></div></div><div class="flex items-center gap-3 self-end sm:self-center"><div class="flex items-center"><button data-index="${i}" data-action="decrease" class="quantity-change h-8 w-8 rounded-l-md border-y border-l border-border-color bg-slate-50 hover:bg-slate-100 transition flex items-center justify-center font-bold text-text-secondary dark:bg-slate-700 dark:hover:bg-slate-600">-</button><input type="number" min="1" value="${itemQuantity}" data-index="${i}" class="quantity-input w-14 h-8 text-center border-y border-border-color p-1 text-sm appearance-none"><button data-index="${i}" data-action="increase" class="quantity-change h-8 w-8 rounded-r-md border-y border-r border-border-color bg-slate-50 hover:bg-slate-100 transition flex items-center justify-center font-bold text-text-secondary dark:bg-slate-700 dark:hover:bg-slate-600">+</button></div><button aria-label="Remover item" data-index="${i}" class="remove-item text-slate-400 hover:text-red-600 transition h-8 w-8 flex items-center justify-center"><svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path></svg></button></div>`;
+          cartList.appendChild(el);
+        });
+      }
+      const saveAndRender = () => { saveCart(); renderCart(); };
+      const escapeHtml = (str) => String(str).replace(/[&<>"']/g, m => ({'&': '&amp;','<': '&lt;','>': '&gt;','"': '&quot;',"'": '&#039;'})[m]);
+      
+      cartList.addEventListener('click', e => {
+        const target = e.target.closest('button');
+        if (!target) return;
+        const i = Number(target.dataset.index);
+        if (target.matches('.remove-item')) { cart.splice(i, 1); saveAndRender(); }
+        if (target.matches('.quantity-change')) {
+          let quantity = cart[i].quantity || 1;
+          if (target.dataset.action === 'increase') quantity++;
+          else if (target.dataset.action === 'decrease' && quantity > 1) quantity--;
+          cart[i].quantity = quantity;
+          saveAndRender();
+        }
+      });
+      cartList.addEventListener('input', e => {
+        if (e.target.matches('.quantity-input')) {
+          const i = Number(e.target.dataset.index);
+          let quantity = parseInt(e.target.value, 10);
+          if (isNaN(quantity) || quantity < 1) { e.target.value = cart[i].quantity || 1; return; };
+          cart[i].quantity = quantity;
+          saveCart(); 
+        }
+      });
+      cartList.addEventListener('blur', e => { if (e.target.matches('.quantity-input') && (!e.target.value || parseInt(e.target.value, 10) < 1)) renderCart(); }, true);
+      clearBtns.forEach(btn => { if (!btn) return; btn.addEventListener('click', async () => { if (await showConfirm('Esvaziar Carrinho', 'Tem certeza que deseja remover todos os itens do orçamento?')) { cart = []; saveAndRender(); } }); });
+
+      sameAddress.addEventListener('change', (e) => {
+        const isDifferent = !e.target.checked;
+        billingContainer.classList.toggle('hidden', !isDifferent);
+        ['cep-billing','rua-billing','bairro-billing','cidade-billing','estado-billing','numero-billing'].forEach(id => { const el = document.getElementById(id); if (el) el.required = isDifferent; });
+      });
+      document.getElementById('cpf_cnpj').addEventListener('input', (e) => {
+        let v = e.target.value.replace(/\D/g,'').substring(0, 14);
+        if (v.length <= 11) { v = v.replace(/(\d{3})(\d)/, '$1.$2').replace(/(\d{3})(\d)/, '$1.$2').replace(/(\d{3})(\d{1,2})$/, '$1-$2'); } else { v = v.replace(/^(\d{2})(\d)/, '$1.$2').replace(/^(\d{2})\.(\d{3})(\d)/, '$1.$2.$3').replace(/\.(\d{3})(\d)/, '.$1/$2').replace(/(\d{4})(\d{1,2})$/, '$1-$2'); }
+        e.target.value = v;
+      });
+
+      async function fetchCEP(cepValue, isBilling = false) {
+        const cleaned = String(cepValue).replace(/\D/g, '');
+        const suffix = isBilling ? '-billing' : '';
+        const spinner = document.getElementById(`cep${suffix}-spinner`);
+        if (cleaned.length !== 8) return;
+        spinner.classList.remove('hidden');
+        try {
+          const res = await fetch(`https://viacep.com.br/ws/${cleaned}/json/`);
+          if (!res.ok) throw new Error('Erro na consulta');
+          const data = await res.json();
+          if (data.erro) throw new Error('CEP não encontrado');
+          const set = (field, val) => { const el = document.getElementById(field + suffix); if (el) el.value = val || ''; };
+          set('rua', data.logradouro); set('bairro', data.bairro); set('cidade', data.localidade); set('estado', data.uf);
+          document.getElementById('numero' + suffix).focus();
+        } catch (err) { await showAlert('Erro de CEP', 'O CEP informado é inválido ou não foi encontrado. Por favor, preencha o endereço manualmente.'); } finally { spinner.classList.add('hidden'); }
+      }
+      document.getElementById('cep').addEventListener('blur', (e) => fetchCEP(e.target.value, false));
+      document.getElementById('cep-billing').addEventListener('blur', (e) => fetchCEP(e.target.value, true));
+
+      function buildMessage() {
+        const getField = id => document.getElementById(id).value;
+        let msg = `*Solicitação de Orçamento - SD Laser Design*%0A%0A*DADOS DO CLIENTE:*%0A_Nome: *${encodeURIComponent(getField('nome'))}*_%0A_Email: ${encodeURIComponent(getField('email'))}_%0A_CPF/CNPJ: ${encodeURIComponent(getField('cpf_cnpj'))}_%0A`;
+        if (getField('ie')) msg += `_IE: ${encodeURIComponent(getField('ie'))}_%0A`;
+        msg += '%0A*ITENS DO ORÇAMENTO:*%0A';
+        cart.forEach(item => { msg += ` • ${item.quantity || 1}x _${encodeURIComponent(item.name)}_%0A`; });
+        msg += '%0A*ENDEREÇO DE ENTREGA:*%0A';
+        msg += `${encodeURIComponent(getField('rua'))}, ${encodeURIComponent(getField('numero'))} - ${encodeURIComponent(getField('bairro'))}%0A${encodeURIComponent(getField('cidade'))}/${encodeURIComponent(getField('estado'))} - CEP: ${encodeURIComponent(getField('cep'))}%0A`;
+        if (!sameAddress.checked) { msg += `%0A*ENDEREÇO DE FATURAMENTO:*%0A${encodeURIComponent(getField('rua-billing'))}, ${encodeURIComponent(getField('numero-billing'))} - ${encodeURIComponent(getField('bairro-billing'))}%0A${encodeURIComponent(getField('cidade-billing'))}/${encodeURIComponent(getField('estado-billing'))} - CEP: ${encodeURIComponent(getField('cep-billing'))}%0A`; }
+        msg += '%0A%0A_Mensagem enviada através do site._';
+        return msg;
+      }
+      function validateForms() {
+          const formsToValidate = [customerForm, addressForm];
+          if (!sameAddress.checked) formsToValidate.push(billingForm);
+          document.querySelectorAll('input.border-red-500').forEach(el => el.classList.remove('border-red-500'));
+          let firstInvalid = null;
+          for (const form of formsToValidate) {
+              if (!form.checkValidity()) {
+                  for (const el of form.elements) {
+                      if (el.tagName === 'INPUT' && !el.checkValidity()) {
+                          el.classList.add('border-red-500');
+                          if(!firstInvalid) firstInvalid = el;
+                      }
+                  }
+              }
+          }
+          if(firstInvalid) { firstInvalid.focus(); return false; }
+          return true;
+      }
+      async function handleCheckout() {
+        if (!validateForms()) { await showAlert('Formulário Incompleto', 'Por favor, preencha todos os campos obrigatórios (*). Eles estão destacados para sua conveniência.'); return; }
+        if (!cart || cart.length === 0) { await showAlert('Carrinho Vazio', 'Seu carrinho está vazio. Adicione produtos para poder finalizar o orçamento.'); return; }
+        window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=${buildMessage()}`, '_blank');
+      }
+      document.querySelectorAll('form input').forEach(input => { input.addEventListener('input', () => { if (input.checkValidity()) input.classList.remove('border-red-500'); }); });
+      checkoutBtns.forEach(b => b && b.addEventListener('click', handleCheckout));
+
+      document.getElementById('current-year').textContent = new Date().getFullYear();
+      renderCart();
+    });
+  </script>
+</body>
+</html>
