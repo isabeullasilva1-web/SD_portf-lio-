@@ -75,7 +75,7 @@
   <header class="bg-card/80 backdrop-blur-sm shadow-sm sticky top-0 z-20 border-b border-border-color">
     <nav class="container mx-auto px-4 sm:px-6 py-3 flex justify-between items-center">
       <a href="index.html" class="flex items-center space-x-3">
-        <img src="src/img/1-Photoroom.png" alt="Logo SD Laser Design" class="h-12 w-12 rounded-full">
+        <img src="https://placehold.co/48x48/2563EB/FFFFFF?text=SD" alt="Logo SD Laser Design" class="h-12 w-12 rounded-full">
         <span class="text-xl font-bold text-text-primary">SD Laser Desing</span>
       </a>
       <div class="flex items-center gap-2">
@@ -83,7 +83,7 @@
             <svg id="theme-icon-light" class="w-5 h-5 text-text-secondary" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"></path></svg>
             <svg id="theme-icon-dark" class="w-5 h-5 text-text-secondary hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"></path></svg>
         </button>
-         <a onclick="history.back()" class="text-sm font-semibold text-blue-600 hover:text-blue-700 transition-colors">
+         <a onclick="history.back()" class="text-sm font-semibold text-blue-600 hover:text-blue-700 transition-colors cursor-pointer">
             &larr; Continuar pré-orçamento
         </a>
       </div>
@@ -122,6 +122,17 @@
                     <label for="email" class="text-sm font-medium text-text-secondary">E-mail *</label>
                     <input type="email" id="email" class="mt-1 w-full p-2.5 border border-border-color rounded-lg text-sm" required>
                 </div>
+                <!-- CAMPO DO INSTAGRAM ADICIONADO -->
+                <div>
+                    <label for="instagram" class="text-sm font-medium text-text-secondary">Instagram</label>
+                    <div class="relative mt-1">
+                        <div class="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3">
+                            <span class="text-gray-500 sm:text-sm">@</span>
+                        </div>
+                        <input type="text" id="instagram" class="w-full p-2.5 border border-border-color rounded-lg text-sm pl-7" placeholder="seuusuario">
+                    </div>
+                </div>
+                <!-- FIM DO CAMPO DO INSTAGRAM -->
                 <div class="grid grid-cols-2 gap-4">
                     <div>
                         <label for="cpf_cnpj" class="text-sm font-medium text-text-secondary">CPF / CNPJ *</label>
@@ -314,7 +325,7 @@
           const itemQuantity = item.quantity || 1;
           const el = document.createElement('div');
           el.className = 'flex flex-col sm:flex-row items-start sm:items-center justify-between py-4 gap-4 fade-in';
-          el.innerHTML = `<div class="flex items-center gap-4 w-full sm:w-auto"><img src="${item.imageUrl}" alt="${escapeHtml(item.name)}" class="w-20 h-20 object-cover rounded-lg border border-border-color flex-shrink-0"><div class="flex-1"><p class="font-semibold text-text-primary">${escapeHtml(item.name)}</p><p class="text-sm text-text-secondary">${escapeHtml(item.material || '')}</p></div></div><div class="flex items-center gap-3 self-end sm:self-center"><div class="flex items-center"><button data-index="${i}" data-action="decrease" class="quantity-change h-8 w-8 rounded-l-md border-y border-l border-border-color bg-slate-50 hover:bg-slate-100 transition flex items-center justify-center font-bold text-text-secondary dark:bg-slate-700 dark:hover:bg-slate-600">-</button><input type="number" min="1" value="${itemQuantity}" data-index="${i}" class="quantity-input w-14 h-8 text-center border-y border-border-color p-1 text-sm appearance-none"><button data-index="${i}" data-action="increase" class="quantity-change h-8 w-8 rounded-r-md border-y border-r border-border-color bg-slate-50 hover:bg-slate-100 transition flex items-center justify-center font-bold text-text-secondary dark:bg-slate-700 dark:hover:bg-slate-600">+</button></div><button aria-label="Remover item" data-index="${i}" class="remove-item text-slate-400 hover:text-red-600 transition h-8 w-8 flex items-center justify-center"><svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path></svg></button></div>`;
+          el.innerHTML = `<div class="flex items-center gap-4 w-full sm:w-auto"><img src="${item.imageUrl || 'https://placehold.co/80x80/e2e8f0/64748b?text=Img'}" alt="${escapeHtml(item.name)}" class="w-20 h-20 object-cover rounded-lg border border-border-color flex-shrink-0"><div class="flex-1"><p class="font-semibold text-text-primary">${escapeHtml(item.name)}</p><p class="text-sm text-text-secondary">${escapeHtml(item.material || '')}</p></div></div><div class="flex items-center gap-3 self-end sm:self-center"><div class="flex items-center"><button data-index="${i}" data-action="decrease" class="quantity-change h-8 w-8 rounded-l-md border-y border-l border-border-color bg-slate-50 hover:bg-slate-100 transition flex items-center justify-center font-bold text-text-secondary dark:bg-slate-700 dark:hover:bg-slate-600">-</button><input type="number" min="1" value="${itemQuantity}" data-index="${i}" class="quantity-input w-14 h-8 text-center border-y border-border-color p-1 text-sm appearance-none"><button data-index="${i}" data-action="increase" class="quantity-change h-8 w-8 rounded-r-md border-y border-r border-border-color bg-slate-50 hover:bg-slate-100 transition flex items-center justify-center font-bold text-text-secondary dark:bg-slate-700 dark:hover:bg-slate-600">+</button></div><button aria-label="Remover item" data-index="${i}" class="remove-item text-slate-400 hover:text-red-600 transition h-8 w-8 flex items-center justify-center"><svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path></svg></button></div>`;
           cartList.appendChild(el);
         });
       }
@@ -376,10 +387,21 @@
       document.getElementById('cep').addEventListener('blur', (e) => fetchCEP(e.target.value, false));
       document.getElementById('cep-billing').addEventListener('blur', (e) => fetchCEP(e.target.value, true));
 
+      // FUNÇÃO DE MENSAGEM ATUALIZADA
       function buildMessage() {
         const getField = id => document.getElementById(id).value;
-        let msg = `*Solicitação de Orçamento - SD Laser Design*%0A%0A*DADOS DO CLIENTE:*%0A_Nome: *${encodeURIComponent(getField('nome'))}*_%0A_Email: ${encodeURIComponent(getField('email'))}_%0A_CPF/CNPJ: ${encodeURIComponent(getField('cpf_cnpj'))}_%0A`;
-        if (getField('ie')) msg += `_IE: ${encodeURIComponent(getField('ie'))}_%0A`;
+        let msg = `*Solicitação de Orçamento - SD Laser Design*%0A%0A*DADOS DO CLIENTE:*%0A_Nome: *${encodeURIComponent(getField('nome'))}*_%0A_Email: ${encodeURIComponent(getField('email'))}_%0A`;
+        
+        if (getField('instagram')) {
+            msg += `_Instagram: @${encodeURIComponent(getField('instagram'))}_%0A`;
+        }
+
+        msg += `_CPF/CNPJ: ${encodeURIComponent(getField('cpf_cnpj'))}_%0A`;
+        
+        if (getField('ie')) {
+            msg += `_IE: ${encodeURIComponent(getField('ie'))}_%0A`;
+        }
+
         msg += '%0A*ITENS DO ORÇAMENTO:*%0A';
         cart.forEach(item => { msg += ` • ${item.quantity || 1}x _${encodeURIComponent(item.name)}_%0A`; });
         msg += '%0A*ENDEREÇO DE ENTREGA:*%0A';
@@ -388,6 +410,7 @@
         msg += '%0A%0A_Mensagem enviada através do site._';
         return msg;
       }
+      
       function validateForms() {
           const formsToValidate = [customerForm, addressForm];
           if (!sameAddress.checked) formsToValidate.push(billingForm);
@@ -417,7 +440,6 @@
       document.getElementById('current-year').textContent = new Date().getFullYear();
       renderCart();
     });
-     // teste
   </script>
 </body>
 </html>
