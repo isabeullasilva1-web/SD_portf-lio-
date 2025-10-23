@@ -530,7 +530,7 @@
         return true;
       }
       function buildMessage(){
-        let msg = `*Solicitação de Orçamento - SD Laser Design*%0A%0A*DADOS DO CLIENTE:*%0A_Nome: *${encodeURIComponent(getField('nome'))}*_%0A_Email: ${encodeURIComponent(getField('email'))}_%0A`;
+        let msg = `*Solicitação de Pré-Orçamento - SD Laser Desing*%0A%0A*DADOS DO CLIENTE:*%0A_Nome: *${encodeURIComponent(getField('nome'))}*_%0A_Email: ${encodeURIComponent(getField('email'))}_%0A`;
         if(getField('instagram')) msg += `_Instagram: @${encodeURIComponent(getField('instagram'))}_%0A`;
         msg += `_CPF/CNPJ: ${encodeURIComponent(getField('cpf_cnpj'))}_%0A`;
         if(getField('ie')) msg += `_IE: ${encodeURIComponent(getField('ie'))}_%0A`;
