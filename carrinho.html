@@ -2,237 +2,310 @@
 <html lang="pt-BR">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Carrinho de Pré-Orçamento - SD Laser Design</title>
-  <script src="https://cdn.tailwindcss.com"></script>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-  <style>
-    :root {
-      --brand: #2563EB;
-      --accent: #25D366;
-      --background: #f8fafc; /* slate-50 */
-      --card: #ffffff;
-      --text-primary: #1e293b; /* slate-800 */
-      --text-secondary: #64748b; /* slate-500 */
-      --border-color: #e2e8f0; /* slate-200 */
-    }
-    html.dark {
-        --background: #0f172a; /* slate-900 */
-        --card: #1e293b; /* slate-800 */
-        --text-primary: #f1f5f9; /* slate-100 */
-        --text-secondary: #94a3b8; /* slate-400 */
-        --border-color: #334155; /* slate-700 */
-    }
-    body {
-      font-family: 'Inter', sans-serif;
-      background-color: var(--background);
-      color: var(--text-primary);
-    }
-    input, select, textarea {
-        background-color: transparent;
-    }
-    input:focus, select:focus, textarea:focus {
-      --tw-ring-color: rgba(37, 99, 235, 0.5);
-      --tw-ring-offset-shadow: var(--tw-ring-inset) 0 0 0 var(--tw-ring-offset-width) var(--tw-ring-offset-color);
-      --tw-ring-shadow: var(--tw-ring-inset) 0 0 0 calc(2px + var(--tw-ring-offset-width)) var(--tw-ring-color);
-      box-shadow: var(--tw-ring-offset-shadow), var(--tw-ring-shadow), var(--tw-shadow, 0 0 #0000);
-      border-color: var(--brand);
-    }
-    .fade-in { animation: fadeIn 0.3s ease-in-out; }
-    @keyframes fadeIn { from { opacity: 0; transform: scale(0.98); } to { opacity: 1; transform: scale(1); } }
-    .fixed-checkout {
-      position: fixed;
-      left: 0;
-      right: 0;
-      bottom: 0;
-      padding: 0.75rem;
-      background: rgba(255, 255, 255, 0.85);
-      box-shadow: 0 -8px 24px rgba(0,0,0,0.07);
-      backdrop-filter: blur(8px);
-      z-index: 40;
-      border-top: 1px solid var(--border-color);
-    }
-    .dark .fixed-checkout {
-        background: rgba(15, 23, 42, 0.85); /* slate-900 */
-    }
-    .spinner {
-      border: 2px solid #e2e8f0;
-      border-top: 2px solid var(--brand);
-      border-radius: 50%;
-      width: 16px;
-      height: 16px;
-      animation: spin 1s linear infinite;
-    }
-    @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
-    input[type=number]::-webkit-inner-spin-button, 
-    input[type=number]::-webkit-outer-spin-button { -webkit-appearance: none; margin: 0; }
-    input[type=number] { appearance: textfield; -webkit-appearance: textfield; -moz-appearance: textfield; }
-  </style>
-</head>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Carrinho de Pré-Orçamento — SD Laser Design</title>
 
+  <!-- Tailwind -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Tipografia -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    :root{
+      --brand:#2563EB; /* CTA azul premium */
+      --accent:#25D366; /* WhatsApp */
+      --background:#f8fafc; /* slate-50 */
+      --card:#ffffff;
+      --text-primary:#1e293b; /* slate-800 */
+      --text-secondary:#64748b; /* slate-500 */
+      --border-color:#e2e8f0; /* slate-200 */
+    }
+    html.dark{
+      --background:#0f172a; /* slate-900 */
+      --card:#111827;       /* slate-800/900 mix mais premium */
+      --text-primary:#e5eefb; 
+      --text-secondary:#94a3b8;
+      --border-color:#334155; /* slate-700 */
+    }
+    body{
+      font-family:'Inter',sans-serif;
+      background:var(--background);
+      color:var(--text-primary);
+      -webkit-font-smoothing:antialiased;
+      -moz-osx-font-smoothing:grayscale;
+    }
+
+    /* ---------- Premium Blue Clean ---------- */
+    .surface{
+      background:var(--card);
+      border:1px solid var(--border-color);
+      border-radius:16px;
+      box-shadow:0 16px 40px -24px rgba(2,6,23,.15);
+    }
+    .surface-ghost{ /* barras / rodapés com transparência */
+      background:color-mix(in srgb, var(--card) 86%, transparent);
+      border-top:1px solid var(--border-color);
+      backdrop-filter:blur(8px);
+    }
+    .btn-primary{
+      display:inline-flex;align-items:center;justify-content:center;gap:.5rem;
+      width:100%;
+      background:var(--brand);color:#fff;font-weight:700;
+      padding:.875rem 1rem;border-radius:.75rem;
+      transition:transform .1s ease, box-shadow .2s ease, background .2s ease;
+      box-shadow:0 10px 20px -10px rgba(37,99,235,.45);
+    }
+    .btn-primary:hover{ background:#1d4ed8; box-shadow:0 14px 24px -12px rgba(37,99,235,.55); }
+    .btn-primary:active{ transform:translateY(1px) scale(.997); }
+
+    .btn-outline{
+      display:inline-flex;align-items:center;justify-content:center;gap:.5rem;
+      width:100%;
+      background:transparent;color:#ef4444;font-weight:700;
+      padding:.75rem 1rem;border-radius:.75rem;
+      border:1px solid color-mix(in srgb, var(--text-secondary) 30%, transparent);
+      transition:background .2s ease, border-color .2s ease, color .2s ease;
+    }
+    .btn-outline:hover{ background:rgba(239,68,68,.08); border-color:#ef4444; }
+
+    /* Inputs */
+    .field{
+      width:100%;
+      padding:.625rem .875rem;
+      background:transparent;
+      border:1px solid var(--border-color);
+      border-radius:.75rem;
+      font-size:.95rem;
+      transition: box-shadow .2s ease, border-color .2s ease;
+    }
+    .field:focus{
+      outline:none;
+      border-color:var(--brand);
+      box-shadow:0 0 0 3px rgba(37,99,235,.14);
+    }
+
+    /* Item do carrinho (compacto) */
+    .line-item{
+      display:flex;align-items:center;justify-content:space-between;gap:1rem;
+      padding:1rem 0;
+    }
+    .line-item + .line-item{ border-top:1px solid var(--border-color); }
+    .thumb{
+      width:80px;height:80px;border-radius:.75rem;object-fit:cover;
+      border:1px solid var(--border-color);
+      flex-shrink:0;
+    }
+    .qty-btn{
+      height:34px;width:34px;
+      display:flex;align-items:center;justify-content:center;
+      background:color-mix(in srgb, var(--card) 85%, transparent);
+      border:1px solid var(--border-color);
+    }
+    .qty-input{
+      width:56px;height:34px;text-align:center;border-top:1px solid var(--border-color);border-bottom:1px solid var(--border-color);
+    }
+    .qty-btn,.qty-input{ border-left:none;border-right:none; }
+    .qty-wrap{
+      display:flex;align-items:center;border:1px solid var(--border-color);border-radius:.5rem;overflow:hidden;
+    }
+
+    /* Barra fixa mobile */
+    .fixed-checkout{
+      position:fixed;left:0;right:0;bottom:0;z-index:40;
+    }
+
+    /* Util */
+    .fade-in{ animation:fadeIn .28s ease; }
+    @keyframes fadeIn{ from{opacity:0;transform:translateY(4px)} to{opacity:1;transform:none} }
+  </style>
+
+</head>
 <body class="flex flex-col min-h-screen">
 
-  <header class="bg-card/80 backdrop-blur-sm shadow-sm sticky top-0 z-20 border-b border-border-color">
+  <!-- Header -->
+  <header class="bg-card/80 backdrop-blur-sm shadow-sm sticky top-0 z-30 border-b border-border-color">
     <nav class="container mx-auto px-4 sm:px-6 py-3 flex justify-between items-center">
-      <a href="index.html" class="flex items-center space-x-3">
-        <img src="https://placehold.co/48x48/2563EB/FFFFFF?text=SD" alt="Logo SD Laser Design" class="h-12 w-12 rounded-full">
-        <span class="text-xl font-bold text-text-primary">SD Laser Desing</span>
+      <a href="index.html" class="flex items-center gap-3">
+        <img src="src/img/1-Photoroom.png" alt="Logo SD Laser Design" class="h-12 w-12 rounded-full">
+        <span class="text-xl font-bold">SD Laser Desing</span>
       </a>
-      <div class="flex items-center gap-2">
+      <div class="flex items-center gap-3">
         <button id="themeToggle" class="p-2 rounded-full hover:bg-slate-200 dark:hover:bg-slate-700 transition-colors" aria-label="Alternar modo de cor">
-            <svg id="theme-icon-light" class="w-5 h-5 text-text-secondary" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"></path></svg>
-            <svg id="theme-icon-dark" class="w-5 h-5 text-text-secondary hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"></path></svg>
+          <svg id="theme-icon-light" class="w-5 h-5 text-text-secondary" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"/></svg>
+          <svg id="theme-icon-dark" class="w-5 h-5 text-text-secondary hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"/></svg>
         </button>
-         <a onclick="history.back()" class="text-sm font-semibold text-blue-600 hover:text-blue-700 transition-colors cursor-pointer">
-            &larr; Continuar pré-orçamento
+        <a onclick="history.back()" class="text-sm font-semibold text-blue-600 hover:text-blue-700 transition-colors cursor-pointer">
+          &larr; Continuar pré-orçamento
         </a>
       </div>
     </nav>
   </header>
 
+  <!-- Main -->
   <main class="container mx-auto px-4 py-8 lg:py-12 flex-1">
-    <h1 class="text-3xl md:text-4xl font-bold text-text-primary mb-8 text-center md:text-left">Seu Pré-Orçamento</h1>
+    <h1 class="text-3xl md:text-4xl font-bold mb-8 text-center md:text-left">Seu Pré-Orçamento</h1>
 
     <div class="grid grid-cols-1 lg:grid-cols-3 gap-8 lg:gap-12 items-start">
+      <!-- Lista -->
       <section class="lg:col-span-2 space-y-6">
-        <div class="bg-card p-6 rounded-xl shadow-sm border border-border-color">
-            <h2 class="text-xl font-bold mb-4 text-text-primary">Itens Selecionados</h2>
-            <div id="cart-items-list" class="divide-y divide-border-color"></div>
+        <div class="surface p-6">
+          <div class="flex items-center justify-between mb-4">
+            <h2 class="text-xl font-bold">Itens Selecionados</h2>
+          </div>
+          <div id="cart-items-list"></div>
         </div>
 
-        <div id="empty-cart-message" class="text-center py-16 bg-card rounded-xl border border-dashed border-border-color fade-in hidden">
-          <svg class="mx-auto h-16 w-16 text-slate-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true" stroke-width="1.5">
-            <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 3h1.386c.51 0 .955.343 1.087.835l.383 1.437M7.5 14.25a3 3 0 00-3 3h15.75m-12.75-3h11.218c.51 0 .962-.344 1.087-.835l1.823-6.831a1.5 1.5 0 00-1.423-2.165H4.198M7.5 14.25h11.218M16.5 21a1.5 1.5 0 11-3 0 1.5 1.5 0 013 0zm-9 0a1.5 1.5 0 11-3 0 1.5 1.5 0 013 0z" />
+        <div id="empty-cart-message" class="surface p-10 text-center fade-in hidden">
+          <svg class="mx-auto h-14 w-14 text-slate-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true" stroke-width="1.5">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 3h1.386c.51 0 .955.343 1.087.835l.383 1.437M7.5 14.25a3 3 0 00-3 3h15.75m-12.75-3h11.218c.51 0 .962-.344 1.087-.835l1.823-6.831a1.5 1.5 0 00-1.423-2.165H4.198M7.5 14.25h11.218M16.5 21a1.5 1.5 0 11-3 0 1.5 1.5 0 013 0zm-9 0a1.5 1.5 0 11-3 0 1.5 1.5 0 013 0z"/>
           </svg>
-          <h3 class="mt-4 text-lg font-semibold text-text-primary">Seu carrinho está vazio</h3>
+          <h3 class="mt-4 text-lg font-semibold">Seu carrinho está vazio</h3>
           <p class="mt-1 text-sm text-text-secondary">Explore nossos produtos para adicionar itens ao seu pré-orçamento.</p>
         </div>
       </section>
 
+      <!-- Sidebar -->
       <aside class="lg:col-span-1 lg:sticky lg:top-28 space-y-6">
-        <div class="bg-card p-6 rounded-xl shadow-sm border border-border-color">
-            <h2 class="text-xl font-bold mb-4 text-text-primary">Suas Informações</h2>
-            
-            <form id="customer-info-form" class="space-y-4" novalidate>
-                <div>
-                    <label for="nome" class="text-sm font-medium text-text-secondary">Nome / Razão Social *</label>
-                    <input type="text" id="nome" class="mt-1 w-full p-2.5 border border-border-color rounded-lg text-sm" required>
+        <div class="surface p-6">
+          <h2 class="text-xl font-bold mb-4">Suas Informações</h2>
+          <form id="customer-info-form" class="space-y-4" novalidate>
+            <div>
+              <label for="nome" class="text-sm font-medium text-text-secondary">Nome / Razão Social *</label>
+              <input id="nome" type="text" class="field mt-1" required>
+            </div>
+            <div>
+              <label for="email" class="text-sm font-medium text-text-secondary">E-mail *</label>
+              <input id="email" type="email" class="field mt-1" required>
+            </div>
+            <div>
+              <label for="instagram" class="text-sm font-medium text-text-secondary">Instagram</label>
+              <div class="relative mt-1">
+                <div class="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3">
+                  <span class="text-gray-500 sm:text-sm">@</span>
+                </div>
+                <input id="instagram" type="text" class="field pl-8" placeholder="seuusuario">
+              </div>
+            </div>
+            <div class="grid grid-cols-2 gap-4">
+              <div>
+                <label for="cpf_cnpj" class="text-sm font-medium text-text-secondary">CPF / CNPJ *</label>
+                <input id="cpf_cnpj" type="text" class="field mt-1" required inputmode="numeric">
+              </div>
+              <div>
+                <label for="ie" class="text-sm font-medium text-text-secondary">Inscrição Estadual</label>
+                <input id="ie" type="text" class="field mt-1">
+              </div>
+            </div>
+          </form>
+
+          <div class="mt-6 pt-6 border-t border-border-color">
+            <h3 class="text-lg font-bold">Endereço de Entrega</h3>
+            <form id="address-form" class="mt-4 space-y-4" novalidate>
+              <div class="grid grid-cols-3 gap-4">
+                <div class="col-span-2 relative">
+                  <label for="cep" class="text-sm font-medium text-text-secondary">CEP *</label>
+                  <input id="cep" type="text" class="field mt-1" required inputmode="numeric">
+                  <div id="cep-spinner" class="hidden absolute right-3 top-[42px] border-2 border-slate-200 border-t-[2px] border-t-blue-600 rounded-full w-4 h-4 animate-spin"></div>
                 </div>
                 <div>
-                    <label for="email" class="text-sm font-medium text-text-secondary">E-mail *</label>
-                    <input type="email" id="email" class="mt-1 w-full p-2.5 border border-border-color rounded-lg text-sm" required>
+                  <label for="numero" class="text-sm font-medium text-text-secondary">Número *</label>
+                  <input id="numero" type="text" class="field mt-1" required>
                 </div>
-                <!-- CAMPO DO INSTAGRAM ADICIONADO -->
+              </div>
+              <div>
+                <label for="rua" class="text-sm font-medium text-text-secondary">Rua, Avenida, etc. *</label>
+                <input id="rua" type="text" class="field mt-1" required>
+              </div>
+              <div>
+                <label for="bairro" class="text-sm font-medium text-text-secondary">Bairro *</label>
+                <input id="bairro" type="text" class="field mt-1" required>
+              </div>
+              <div class="grid grid-cols-3 gap-4">
+                <div class="col-span-2">
+                  <label for="cidade" class="text-sm font-medium text-text-secondary">Cidade *</label>
+                  <input id="cidade" type="text" class="field mt-1" required>
+                </div>
                 <div>
-                    <label for="instagram" class="text-sm font-medium text-text-secondary">Instagram</label>
-                    <div class="relative mt-1">
-                        <div class="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3">
-                            <span class="text-gray-500 sm:text-sm">@</span>
-                        </div>
-                        <input type="text" id="instagram" class="w-full p-2.5 border border-border-color rounded-lg text-sm pl-7" placeholder="seuusuario">
-                    </div>
+                  <label for="estado" class="text-sm font-medium text-text-secondary">UF *</label>
+                  <input id="estado" type="text" maxlength="2" class="field mt-1" required>
                 </div>
-                <!-- FIM DO CAMPO DO INSTAGRAM -->
-                <div class="grid grid-cols-2 gap-4">
-                    <div>
-                        <label for="cpf_cnpj" class="text-sm font-medium text-text-secondary">CPF / CNPJ *</label>
-                        <input type="text" id="cpf_cnpj" class="mt-1 w-full p-2.5 border border-border-color rounded-lg text-sm" required inputmode="numeric" />
-                    </div>
-                    <div>
-                        <label for="ie" class="text-sm font-medium text-text-secondary">Inscrição Estadual</label>
-                        <input type="text" id="ie" class="mt-1 w-full p-2.5 border border-border-color rounded-lg text-sm" />
-                    </div>
-                </div>
+              </div>
             </form>
-            
-            <div class="mt-6 pt-6 border-t border-border-color">
-                <h3 class="text-lg font-bold text-text-primary">Endereço de Entrega</h3>
-                <form id="address-form" class="mt-4 space-y-4" novalidate>
-                    <div class="grid grid-cols-3 gap-4">
-                        <div class="col-span-2 relative">
-                            <label for="cep" class="text-sm font-medium text-text-secondary">CEP *</label>
-                            <input type="text" id="cep" class="mt-1 w-full p-2.5 border border-border-color rounded-lg text-sm" required inputmode="numeric" />
-                            <div id="cep-spinner" class="spinner absolute right-3 top-[calc(50%+6px)] -translate-y-1/2 hidden"></div>
-                        </div>
-                        <div>
-                            <label for="numero" class="text-sm font-medium text-text-secondary">Número *</label>
-                            <input type="text" id="numero" class="mt-1 w-full p-2.5 border border-border-color rounded-lg text-sm" required />
-                        </div>
-                    </div>
-                    <div>
-                        <label for="rua" class="text-sm font-medium text-text-secondary">Rua, Avenida, etc. *</label>
-                        <input type="text" id="rua" class="mt-1 w-full p-2.5 border border-border-color rounded-lg text-sm" required>
-                    </div>
-                    <div>
-                        <label for="bairro" class="text-sm font-medium text-text-secondary">Bairro *</label>
-                        <input type="text" id="bairro" class="mt-1 w-full p-2.5 border border-border-color rounded-lg text-sm" required>
-                    </div>
-                    <div class="grid grid-cols-3 gap-4">
-                        <div class="col-span-2">
-                            <label for="cidade" class="text-sm font-medium text-text-secondary">Cidade *</label>
-                            <input type="text" id="cidade" class="mt-1 w-full p-2.5 border border-border-color rounded-lg text-sm" required>
-                        </div>
-                        <div>
-                            <label for="estado" class="text-sm font-medium text-text-secondary">UF *</label>
-                            <input type="text" id="estado" class="mt-1 w-full p-2.5 border border-border-color rounded-lg text-sm" required maxlength="2">
-                        </div>
-                    </div>
-                </form>
-            </div>
+          </div>
 
-            <div class="mt-4 pt-4 border-t border-border-color">
-                <label class="flex items-center space-x-2 text-sm text-text-secondary cursor-pointer">
-                <input type="checkbox" id="same-address" class="h-4 w-4 rounded text-blue-600 border-gray-300 focus:ring-blue-500" checked>
-                <span>Endereço de faturamento é o mesmo.</span>
-                </label>
-            </div>
+          <div class="mt-4 pt-4 border-t border-border-color">
+            <label class="flex items-center gap-2 text-sm text-text-secondary cursor-pointer">
+              <input id="same-address" type="checkbox" class="h-4 w-4 rounded text-blue-600 border-gray-300 focus:ring-blue-500" checked>
+              <span>Endereço de faturamento é o mesmo.</span>
+            </label>
+          </div>
 
-            <div id="billing-address-container" class="hidden mt-4 pt-4 border-t border-border-color">
-                <h3 class="text-lg font-bold mb-3 text-text-primary">Endereço de Faturamento</h3>
-                <form id="billing-address-form" class="space-y-4" novalidate>
-                     <div class="grid grid-cols-3 gap-4">
-                        <div class="col-span-2 relative">
-                            <label for="cep-billing" class="text-sm font-medium text-text-secondary">CEP *</label>
-                            <input type="text" id="cep-billing" class="mt-1 w-full p-2.5 border border-border-color rounded-lg text-sm" inputmode="numeric" />
-                            <div id="cep-billing-spinner" class="spinner absolute right-3 top-[calc(50%+6px)] -translate-y-1/2 hidden"></div>
-                        </div>
-                        <div>
-                            <label for="numero-billing" class="text-sm font-medium text-text-secondary">Número *</label>
-                            <input type="text" id="numero-billing" class="mt-1 w-full p-2.5 border border-border-color rounded-lg text-sm" />
-                        </div>
-                    </div>
-                </form>
-            </div>
+          <div id="billing-address-container" class="hidden mt-4 pt-4 border-t border-border-color">
+            <h3 class="text-lg font-bold mb-3">Endereço de Faturamento</h3>
+            <form id="billing-address-form" class="space-y-4" novalidate>
+              <div class="grid grid-cols-3 gap-4">
+                <div class="col-span-2 relative">
+                    <label for="cep-billing" class="text-sm font-medium text-text-secondary">CEP *</label>
+                    <input id="cep-billing" type="text" class="field mt-1" inputmode="numeric">
+                    <div id="cep-billing-spinner" class="hidden absolute right-3 top-[42px] border-2 border-slate-200 border-t-[2px] border-t-blue-600 rounded-full w-4 h-4 animate-spin"></div>
+                </div>
+                <div>
+                  <label for="numero-billing" class="text-sm font-medium text-text-secondary">Número *</label>
+                  <input id="numero-billing" type="text" class="field mt-1">
+                </div>
+              </div>
+              <div>
+                <label for="rua-billing" class="text-sm font-medium text-text-secondary">Rua, Avenida, etc. *</label>
+                <input id="rua-billing" type="text" class="field mt-1">
+              </div>
+              <div>
+                <label for="bairro-billing" class="text-sm font-medium text-text-secondary">Bairro *</label>
+                <input id="bairro-billing" type="text" class="field mt-1">
+              </div>
+              <div class="grid grid-cols-3 gap-4">
+                <div class="col-span-2">
+                  <label for="cidade-billing" class="text-sm font-medium text-text-secondary">Cidade *</label>
+                  <input id="cidade-billing" type="text" class="field mt-1">
+                </div>
+                <div>
+                  <label for="estado-billing" class="text-sm font-medium text-text-secondary">UF *</label>
+                  <input id="estado-billing" type="text" maxlength="2" class="field mt-1">
+                </div>
+              </div>
+            </form>
+          </div>
         </div>
 
+        <!-- CTAs (Desktop) -->
         <div class="hidden lg:block space-y-3">
-          <button id="checkout-btn-desktop" class="w-full bg-green-500 hover:bg-green-600 text-white py-3 px-4 rounded-lg font-semibold shadow-sm hover:shadow-md transition-all flex items-center justify-center gap-2.5 text-base transform hover:scale-[1.02]">
-            <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M16.28 14.53c-.28-.14-1.67-.82-1.92-.92-.25-.09-.44-.14-.62.14-.18.28-.72.92-.88 1.1-.16.18-.32.2-.59.06-.27-.14-1.15-.42-2.19-1.35-.81-.73-1.35-1.63-1.5-1.92-.14-.28-.02-.44.13-.58.13-.13.28-.32.42-.48.14-.16.18-.28.28-.46.09-.18.05-.37-.02-.51s-.62-1.5-.85-2.07c-.23-.57-.46-.49-.62-.5-.16-.02-.34-.02-.53-.02-.18 0-.48.07-.72.35-.25.28-.96.94-1.18 2.22-.22 1.28.66 2.71 1.53 3.65 1.05 1.12 2.33 2.05 4.3 2.86.39.16.7.25.96.32.48.12.92.1.92.1.28 0 .82-.12 1.1-.68.28-.57.28-1.05.2-1.15s-.2-.18-.46-.32zM12 2.04c-5.5 0-9.96 4.46-9.96 9.96 0 1.77.46 3.45 1.28 4.9L2 22l5.25-1.38c1.4.74 2.98 1.18 4.75 1.18h.01c5.5 0 9.96-4.46 9.96-9.96s-4.46-9.96-9.96-9.96z"/></svg>
+          <button id="checkout-btn-desktop" class="btn-primary">
+            <svg class="w-5 h-5" viewBox="0 0 24 24" fill="currentColor"><path d="M16.28 14.53c-.28-.14-1.67-.82-1.92-.92-.25-.09-.44-.14-.62.14-.18.28-.72.92-.88 1.1-.16.18-.32.2-.59.06-.27-.14-1.15-.42-2.19-1.35-.81-.73-1.35-1.63-1.5-1.92-.14-.28-.02-.44.13-.58.13-.13.28-.32.42-.48.14-.16.18-.28.28-.46.09-.18.05-.37-.02-.51s-.62-1.5-.85-2.07c-.23-.57-.46-.49-.62-.5-.16-.02-.34-.02-.53-.02-.18 0-.48.07-.72.35-.25.28-.96.94-1.18 2.22-.22 1.28.66 2.71 1.53 3.65 1.05 1.12 2.33 2.05 4.3 2.86.39.16.7.25.96.32.48.12.92.1.92.1.28 0 .82-.12 1.1-.68.28-.57.28-1.05.2-1.15s-.2-.18-.46-.32zM12 2.04c-5.5 0-9.96 4.46-9.96 9.96 0 1.77.46 3.45 1.28 4.9L2 22l5.25-1.38c1.4.74 2.98 1.18 4.75 1.18h.01c5.5 0 9.96-4.46 9.96-9.96s-4.46-9.96-9.96-9.96z"/></svg>
             Finalizar Pré-Orçamento
           </button>
-          <button id="clear-cart-btn-desktop" class="w-full text-center text-sm font-semibold text-red-600 hover:bg-red-500/10 rounded-lg py-2 transition-colors">
-            Esvaziar Carrinho
-          </button>
+          <button id="clear-cart-btn-desktop" class="btn-outline">Esvaziar Carrinho</button>
         </div>
       </aside>
     </div>
   </main>
 
-  <div class="lg:hidden fixed-checkout">
-    <div class="container mx-auto px-4 flex gap-3">
-      <button id="checkout-btn-mobile" class="flex-1 bg-green-500 hover:bg-green-600 text-white py-3 rounded-xl font-semibold shadow-lg transition">Finalizar</button>
-      <button id="clear-cart-btn-mobile" class="w-28 border border-border-color bg-card text-red-600 py-3 rounded-xl font-semibold hover:bg-red-500/10 transition text-sm shadow-sm">Esvaziar</button>
+  <!-- Barra fixa (Mobile) -->
+  <div class="lg:hidden fixed-checkout surface-ghost">
+    <div class="container mx-auto px-4 py-3 flex gap-3">
+      <button id="checkout-btn-mobile" class="flex-1 btn-primary">Finalizar</button>
+      <button id="clear-cart-btn-mobile" class="w-28 btn-outline">Esvaziar</button>
     </div>
   </div>
 
+  <!-- Footer -->
   <footer class="bg-card border-t border-border-color py-6 text-center text-sm text-text-secondary mt-16">
     © <span id="current-year"></span> SD Laser Desing — Todos os direitos reservados.
   </footer>
 
-  <div id="custom-modal" class="fixed inset-0 bg-slate-900 bg-opacity-60 flex items-center justify-center p-4 z-50 hidden fade-in">
-    <div class="relative w-full max-w-md mx-auto p-6 shadow-xl rounded-xl bg-card">
+  <!-- Modal -->
+  <div id="custom-modal" class="fixed inset-0 bg-slate-900/60 hidden items-center justify-center p-4 z-50 fade-in">
+    <div class="relative w-full max-w-md mx-auto p-6 surface">
       <div class="text-center">
-        <h3 id="modal-title" class="text-xl leading-6 font-bold text-text-primary"></h3>
+        <h3 id="modal-title" class="text-xl font-bold"></h3>
         <div class="mt-3">
           <p id="modal-message" class="text-sm text-text-secondary"></p>
         </div>
@@ -244,6 +317,27 @@
   <script>
     document.addEventListener('DOMContentLoaded', () => {
       const WHATSAPP_NUMBER = '5519997255040';
+
+      // THEME
+      const themeToggle = document.getElementById('themeToggle');
+      const lightIcon = document.getElementById('theme-icon-light');
+      const darkIcon = document.getElementById('theme-icon-dark');
+      const applyTheme = (theme) => {
+        if (theme === 'dark'){
+          document.documentElement.classList.add('dark');
+          lightIcon.classList.add('hidden'); darkIcon.classList.remove('hidden');
+        } else {
+          document.documentElement.classList.remove('dark');
+          lightIcon.classList.remove('hidden'); darkIcon.classList.add('hidden');
+        }
+      };
+      themeToggle.addEventListener('click', () => {
+        const newTheme = document.documentElement.classList.contains('dark') ? 'light':'dark';
+        localStorage.setItem('theme', newTheme); applyTheme(newTheme);
+      });
+      applyTheme(localStorage.getItem('theme') || (matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'));
+
+      // STATE
       const cartList = document.getElementById('cart-items-list');
       const emptyCart = document.getElementById('empty-cart-message');
       const checkoutBtns = [document.getElementById('checkout-btn-desktop'), document.getElementById('checkout-btn-mobile')];
@@ -253,190 +347,218 @@
       const billingForm = document.getElementById('billing-address-form');
       const sameAddress = document.getElementById('same-address');
       const billingContainer = document.getElementById('billing-address-container');
+
+      let cart = JSON.parse(localStorage.getItem('sdCart')) || [];
+
+      // MODAL
       const modalEl = document.getElementById('custom-modal');
       const modalTitle = document.getElementById('modal-title');
       const modalMessage = document.getElementById('modal-message');
       const modalButtons = document.getElementById('modal-buttons');
-      let cart = JSON.parse(localStorage.getItem('sdCart')) || [];
-
-      const themeToggle = document.getElementById('themeToggle');
-      const lightIcon = document.getElementById('theme-icon-light');
-      const darkIcon = document.getElementById('theme-icon-dark');
-      const applyTheme = (theme) => {
-        if (theme === 'dark') {
-            document.documentElement.classList.add('dark');
-            lightIcon.classList.add('hidden');
-            darkIcon.classList.remove('hidden');
-        } else {
-            document.documentElement.classList.remove('dark');
-            lightIcon.classList.remove('hidden');
-            darkIcon.classList.add('hidden');
-        }
-      };
-      themeToggle.addEventListener('click', () => {
-        const newTheme = document.documentElement.classList.contains('dark') ? 'light' : 'dark';
-        localStorage.setItem('theme', newTheme);
-        applyTheme(newTheme);
-      });
-      applyTheme(localStorage.getItem('theme') || (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'));
-
       let modalResolve = null;
-      const showModal = () => modalEl.classList.remove('hidden');
-      const hideModal = () => modalEl.classList.add('hidden');
-      modalEl.addEventListener('click', (e) => { if (e.target === modalEl) { hideModal(); if (modalResolve) modalResolve(false); } });
-      function createModal(title, message, buttons) {
-          modalTitle.textContent = title;
-          modalMessage.innerHTML = message;
-          modalButtons.innerHTML = '';
-          buttons.forEach(btn => modalButtons.appendChild(btn));
-          showModal();
-          return new Promise(resolve => { modalResolve = resolve; });
+      const showModal = () => { modalEl.classList.remove('hidden'); modalEl.classList.add('flex'); };
+      const hideModal = () => { modalEl.classList.add('hidden'); modalEl.classList.remove('flex'); };
+      modalEl.addEventListener('click', (e) => { if (e.target === modalEl){ hideModal(); if(modalResolve) modalResolve(false);} });
+      function createModal(title, html, btns){
+        modalTitle.textContent = title;
+        modalMessage.innerHTML = html;
+        modalButtons.innerHTML = '';
+        btns.forEach(b => modalButtons.appendChild(b));
+        showModal();
+        return new Promise(res => modalResolve = res);
       }
-      function showAlert(title, message) {
-          const okButton = document.createElement('button');
-          okButton.textContent = 'Entendi';
-          okButton.className = 'w-full bg-blue-600 text-white font-semibold py-2 px-4 rounded-lg hover:bg-blue-700 transition';
-          okButton.onclick = () => { hideModal(); modalResolve(true); };
-          return createModal(title, message, [okButton]);
+      function showAlert(title, message){
+        const ok = document.createElement('button');
+        ok.textContent = 'Entendi';
+        ok.className = 'btn-primary !w-auto px-6';
+        ok.onclick = () => { hideModal(); modalResolve(true); };
+        return createModal(title, message, [ok]);
       }
-      function showConfirm(title, message) {
-          const confirmButton = document.createElement('button');
-          confirmButton.textContent = 'Confirmar';
-          confirmButton.className = 'flex-1 bg-red-600 text-white font-semibold py-2 px-4 rounded-lg hover:bg-red-700 transition';
-          confirmButton.onclick = () => { hideModal(); modalResolve(true); };
-          const cancelButton = document.createElement('button');
-          cancelButton.textContent = 'Cancelar';
-          cancelButton.className = 'flex-1 bg-slate-200 text-slate-800 font-semibold py-2 px-4 rounded-lg hover:bg-slate-300 transition dark:bg-slate-600 dark:text-slate-200 dark:hover:bg-slate-700';
-          cancelButton.onclick = () => { hideModal(); modalResolve(false); };
-          return createModal(title, message, [cancelButton, confirmButton]);
+      function showConfirm(title, message){
+        const confirm = document.createElement('button');
+        confirm.textContent = 'Confirmar';
+        confirm.className = 'btn-primary !w-auto px-6';
+        confirm.onclick = () => { hideModal(); modalResolve(true); };
+        const cancel = document.createElement('button');
+        cancel.textContent = 'Cancelar';
+        cancel.className = 'btn-outline !w-auto px-6';
+        cancel.onclick = () => { hideModal(); modalResolve(false); };
+        return createModal(title, message, [cancel, confirm]);
       }
 
       const saveCart = () => localStorage.setItem('sdCart', JSON.stringify(cart));
-      function showEmpty(isEmpty) {
+      const escapeHtml = (s) => String(s).replace(/[&<>"']/g, m => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'}[m]));
+
+      function showEmpty(isEmpty){
         emptyCart.classList.toggle('hidden', !isEmpty);
         checkoutBtns.forEach(b => { if(!b) return; b.disabled = isEmpty; b.classList.toggle('opacity-50', isEmpty); b.classList.toggle('cursor-not-allowed', isEmpty); });
         clearBtns.forEach(b => b && b.classList.toggle('hidden', isEmpty));
       }
-      function renderCart() {
+
+      function renderCart(){
         cartList.innerHTML = '';
-        if (!cart || cart.length === 0) { showEmpty(true); return; }
+        if(!cart || cart.length === 0){ showEmpty(true); return; }
         showEmpty(false);
+
         cart.forEach((item, i) => {
-          const itemQuantity = item.quantity || 1;
-          const el = document.createElement('div');
-          el.className = 'flex flex-col sm:flex-row items-start sm:items-center justify-between py-4 gap-4 fade-in';
-          el.innerHTML = `<div class="flex items-center gap-4 w-full sm:w-auto"><img src="${item.imageUrl || 'https://placehold.co/80x80/e2e8f0/64748b?text=Img'}" alt="${escapeHtml(item.name)}" class="w-20 h-20 object-cover rounded-lg border border-border-color flex-shrink-0"><div class="flex-1"><p class="font-semibold text-text-primary">${escapeHtml(item.name)}</p><p class="text-sm text-text-secondary">${escapeHtml(item.material || '')}</p></div></div><div class="flex items-center gap-3 self-end sm:self-center"><div class="flex items-center"><button data-index="${i}" data-action="decrease" class="quantity-change h-8 w-8 rounded-l-md border-y border-l border-border-color bg-slate-50 hover:bg-slate-100 transition flex items-center justify-center font-bold text-text-secondary dark:bg-slate-700 dark:hover:bg-slate-600">-</button><input type="number" min="1" value="${itemQuantity}" data-index="${i}" class="quantity-input w-14 h-8 text-center border-y border-border-color p-1 text-sm appearance-none"><button data-index="${i}" data-action="increase" class="quantity-change h-8 w-8 rounded-r-md border-y border-r border-border-color bg-slate-50 hover:bg-slate-100 transition flex items-center justify-center font-bold text-text-secondary dark:bg-slate-700 dark:hover:bg-slate-600">+</button></div><button aria-label="Remover item" data-index="${i}" class="remove-item text-slate-400 hover:text-red-600 transition h-8 w-8 flex items-center justify-center"><svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path></svg></button></div>`;
-          cartList.appendChild(el);
+          const q = item.quantity || 1;
+          const row = document.createElement('div');
+          row.className = 'line-item fade-in';
+
+          row.innerHTML = `
+            <div class="flex items-center gap-4 min-w-0">
+              <img class="thumb" src="${item.imageUrl || 'https://placehold.co/80x80/e2e8f0/64748b?text=Img'}" alt="${escapeHtml(item.name)}">
+              <div class="min-w-0">
+                <p class="font-semibold truncate">${escapeHtml(item.name)}</p>
+                <p class="text-sm text-text-secondary truncate">${escapeHtml(item.material || '')}</p>
+              </div>
+            </div>
+
+            <div class="flex items-center gap-3">
+              <div class="qty-wrap">
+                <button class="quantity-change qty-btn" data-index="${i}" data-action="decrease" aria-label="Diminuir">−</button>
+                <input class="qty-input field !rounded-none !border-x !border-y-0 !shadow-none" type="number" min="1" value="${q}" data-index="${i}">
+                <button class="quantity-change qty-btn" data-index="${i}" data-action="increase" aria-label="Aumentar">+</button>
+              </div>
+              <button class="remove-item h-9 w-9 rounded-lg hover:bg-red-500/10 text-slate-400 hover:text-red-600 transition flex items-center justify-center" data-index="${i}" aria-label="Remover item">
+                <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/></svg>
+              </button>
+            </div>
+          `;
+          cartList.appendChild(row);
         });
       }
-      const saveAndRender = () => { saveCart(); renderCart(); };
-      const escapeHtml = (str) => String(str).replace(/[&<>"']/g, m => ({'&': '&amp;','<': '&lt;','>': '&gt;','"': '&quot;',"'": '&#039;'})[m]);
-      
-      cartList.addEventListener('click', e => {
-        const target = e.target.closest('button');
-        if (!target) return;
-        const i = Number(target.dataset.index);
-        if (target.matches('.remove-item')) { cart.splice(i, 1); saveAndRender(); }
-        if (target.matches('.quantity-change')) {
-          let quantity = cart[i].quantity || 1;
-          if (target.dataset.action === 'increase') quantity++;
-          else if (target.dataset.action === 'decrease' && quantity > 1) quantity--;
-          cart[i].quantity = quantity;
-          saveAndRender();
-        }
-      });
-      cartList.addEventListener('input', e => {
-        if (e.target.matches('.quantity-input')) {
-          const i = Number(e.target.dataset.index);
-          let quantity = parseInt(e.target.value, 10);
-          if (isNaN(quantity) || quantity < 1) { e.target.value = cart[i].quantity || 1; return; };
-          cart[i].quantity = quantity;
-          saveCart(); 
-        }
-      });
-      cartList.addEventListener('blur', e => { if (e.target.matches('.quantity-input') && (!e.target.value || parseInt(e.target.value, 10) < 1)) renderCart(); }, true);
-      clearBtns.forEach(btn => { if (!btn) return; btn.addEventListener('click', async () => { if (await showConfirm('Esvaziar Carrinho', 'Tem certeza que deseja remover todos os itens do orçamento?')) { cart = []; saveAndRender(); } }); });
 
-      sameAddress.addEventListener('change', (e) => {
-        const isDifferent = !e.target.checked;
-        billingContainer.classList.toggle('hidden', !isDifferent);
-        ['cep-billing','rua-billing','bairro-billing','cidade-billing','estado-billing','numero-billing'].forEach(id => { const el = document.getElementById(id); if (el) el.required = isDifferent; });
+      const saveAndRender = () => { saveCart(); renderCart(); };
+
+      cartList.addEventListener('click', (e) => {
+        const btn = e.target.closest('button');
+        if(!btn) return;
+        const i = Number(btn.dataset.index);
+        if(btn.matches('.remove-item')){ cart.splice(i,1); saveAndRender(); }
+        if(btn.matches('.quantity-change')){
+          let q = cart[i].quantity || 1;
+          if(btn.dataset.action === 'increase') q++;
+          if(btn.dataset.action === 'decrease' && q > 1) q--;
+          cart[i].quantity = q; saveAndRender();
+        }
       });
-      document.getElementById('cpf_cnpj').addEventListener('input', (e) => {
-        let v = e.target.value.replace(/\D/g,'').substring(0, 14);
-        if (v.length <= 11) { v = v.replace(/(\d{3})(\d)/, '$1.$2').replace(/(\d{3})(\d)/, '$1.$2').replace(/(\d{3})(\d{1,2})$/, '$1-$2'); } else { v = v.replace(/^(\d{2})(\d)/, '$1.$2').replace(/^(\d{2})\.(\d{3})(\d)/, '$1.$2.$3').replace(/\.(\d{3})(\d)/, '.$1/$2').replace(/(\d{4})(\d{1,2})$/, '$1-$2'); }
+      cartList.addEventListener('input', (e) => {
+        if(e.target.matches('.qty-input')){
+          const i = Number(e.target.dataset.index);
+          let q = parseInt(e.target.value, 10);
+          if(isNaN(q) || q < 1){ e.target.value = cart[i].quantity || 1; return; }
+          cart[i].quantity = q; saveCart();
+        }
+      });
+      cartList.addEventListener('blur', (e)=>{ if(e.target.matches('.qty-input') && (!e.target.value || parseInt(e.target.value,10) < 1)) renderCart(); }, true);
+
+      // CLEAR
+      const clearAll = async () => {
+        const ok = await showConfirm('Esvaziar Carrinho', 'Tem certeza que deseja remover todos os itens do orçamento?');
+        if(ok){ cart = []; saveAndRender(); }
+      };
+      clearBtns.forEach(b => b && b.addEventListener('click', clearAll));
+
+      // BILLING TOGGLE
+      sameAddress.addEventListener('change', (e) => {
+        const diff = !e.target.checked;
+        billingContainer.classList.toggle('hidden', !diff);
+        ['cep-billing','rua-billing','bairro-billing','cidade-billing','estado-billing','numero-billing'].forEach(id=>{
+          const el = document.getElementById(id); if(el) el.required = diff;
+        });
+      });
+
+      // MASK CPF/CNPJ
+      document.getElementById('cpf_cnpj').addEventListener('input', (e)=>{
+        let v = e.target.value.replace(/\D/g,'').substring(0,14);
+        if(v.length <= 11){
+          v = v.replace(/(\d{3})(\d)/,'$1.$2').replace(/(\d{3})(\d)/,'$1.$2').replace(/(\d{3})(\d{1,2})$/,'$1-$2');
+        } else {
+          v = v.replace(/^(\d{2})(\d)/,'$1.$2').replace(/^(\d{2})\.(\d{3})(\d)/,'$1.$2.$3').replace(/\.(\d{3})(\d)/,'.$1/$2').replace(/(\d{4})(\d{1,2})$/,'$1-$2');
+        }
         e.target.value = v;
       });
 
-      async function fetchCEP(cepValue, isBilling = false) {
-        const cleaned = String(cepValue).replace(/\D/g, '');
-        const suffix = isBilling ? '-billing' : '';
-        const spinner = document.getElementById(`cep${suffix}-spinner`);
-        if (cleaned.length !== 8) return;
+      // CEP
+      async function fetchCEP(cepValue, isBilling=false){
+        const cleaned = String(cepValue).replace(/\D/g,'');
+        const suf = isBilling ? '-billing':'';
+        const spinner = document.getElementById(`cep${suf}-spinner`);
+        if(cleaned.length !== 8) return;
         spinner.classList.remove('hidden');
-        try {
+        try{
           const res = await fetch(`https://viacep.com.br/ws/${cleaned}/json/`);
-          if (!res.ok) throw new Error('Erro na consulta');
+          if(!res.ok) throw new Error('Erro na consulta');
           const data = await res.json();
-          if (data.erro) throw new Error('CEP não encontrado');
-          const set = (field, val) => { const el = document.getElementById(field + suffix); if (el) el.value = val || ''; };
-          set('rua', data.logradouro); set('bairro', data.bairro); set('cidade', data.localidade); set('estado', data.uf);
-          document.getElementById('numero' + suffix).focus();
-        } catch (err) { await showAlert('Erro de CEP', 'O CEP informado é inválido ou não foi encontrado. Por favor, preencha o endereço manualmente.'); } finally { spinner.classList.add('hidden'); }
+          if(data.erro) throw new Error('CEP não encontrado');
+          const set = (id, val)=>{ const el = document.getElementById(id + suf); if(el) el.value = val || ''; };
+          set('rua', data.logradouro);
+          set('bairro', data.bairro);
+          set('cidade', data.localidade);
+          set('estado', data.uf);
+          const numberEl = document.getElementById('numero'+suf);
+          if(numberEl) numberEl.focus();
+        }catch(err){
+          await showAlert('Erro de CEP','O CEP informado é inválido ou não foi encontrado. Por favor, preencha o endereço manualmente.');
+        }finally{
+          spinner.classList.add('hidden');
+        }
       }
-      document.getElementById('cep').addEventListener('blur', (e) => fetchCEP(e.target.value, false));
-      document.getElementById('cep-billing').addEventListener('blur', (e) => fetchCEP(e.target.value, true));
+      document.getElementById('cep').addEventListener('blur', (e)=>fetchCEP(e.target.value,false));
+      document.getElementById('cep-billing').addEventListener('blur', (e)=>fetchCEP(e.target.value,true));
 
-      // FUNÇÃO DE MENSAGEM ATUALIZADA
-      function buildMessage() {
-        const getField = id => document.getElementById(id).value;
+      // CHECKOUT
+      const getField = id => (document.getElementById(id)?.value || '');
+      function validateForms(){
+        const forms = [customerForm, addressForm];
+        if(!sameAddress.checked) forms.push(billingForm);
+        document.querySelectorAll('input.border-red-500').forEach(el=>el.classList.remove('border-red-500'));
+        let firstInvalid = null;
+        for(const f of forms){
+          if(!f) continue;
+          if(!f.checkValidity()){
+            for(const el of f.elements){
+              if(el.tagName === 'INPUT' && !el.checkValidity()){
+                el.classList.add('border-red-500');
+                if(!firstInvalid) firstInvalid = el;
+              }
+            }
+          }
+        }
+        if(firstInvalid){ firstInvalid.focus(); return false; }
+        return true;
+      }
+      function buildMessage(){
         let msg = `*Solicitação de Orçamento - SD Laser Design*%0A%0A*DADOS DO CLIENTE:*%0A_Nome: *${encodeURIComponent(getField('nome'))}*_%0A_Email: ${encodeURIComponent(getField('email'))}_%0A`;
-        
-        if (getField('instagram')) {
-            msg += `_Instagram: @${encodeURIComponent(getField('instagram'))}_%0A`;
-        }
-
+        if(getField('instagram')) msg += `_Instagram: @${encodeURIComponent(getField('instagram'))}_%0A`;
         msg += `_CPF/CNPJ: ${encodeURIComponent(getField('cpf_cnpj'))}_%0A`;
-        
-        if (getField('ie')) {
-            msg += `_IE: ${encodeURIComponent(getField('ie'))}_%0A`;
+        if(getField('ie')) msg += `_IE: ${encodeURIComponent(getField('ie'))}_%0A`;
+        msg += `%0A*ITENS DO ORÇAMENTO:*%0A`;
+        cart.forEach(i => { msg += ` • ${i.quantity || 1}x _${encodeURIComponent(i.name)}_%0A`; });
+        msg += `%0A*ENDEREÇO DE ENTREGA:*%0A${encodeURIComponent(getField('rua'))}, ${encodeURIComponent(getField('numero'))} - ${encodeURIComponent(getField('bairro'))}%0A${encodeURIComponent(getField('cidade'))}/${encodeURIComponent(getField('estado'))} - CEP: ${encodeURIComponent(getField('cep'))}%0A`;
+        if(!sameAddress.checked){
+          msg += `%0A*ENDEREÇO DE FATURAMENTO:*%0A${encodeURIComponent(getField('rua-billing'))}, ${encodeURIComponent(getField('numero-billing'))} - ${encodeURIComponent(getField('bairro-billing'))}%0A${encodeURIComponent(getField('cidade-billing'))}/${encodeURIComponent(getField('estado-billing'))} - CEP: ${encodeURIComponent(getField('cep-billing'))}%0A`;
         }
-
-        msg += '%0A*ITENS DO ORÇAMENTO:*%0A';
-        cart.forEach(item => { msg += ` • ${item.quantity || 1}x _${encodeURIComponent(item.name)}_%0A`; });
-        msg += '%0A*ENDEREÇO DE ENTREGA:*%0A';
-        msg += `${encodeURIComponent(getField('rua'))}, ${encodeURIComponent(getField('numero'))} - ${encodeURIComponent(getField('bairro'))}%0A${encodeURIComponent(getField('cidade'))}/${encodeURIComponent(getField('estado'))} - CEP: ${encodeURIComponent(getField('cep'))}%0A`;
-        if (!sameAddress.checked) { msg += `%0A*ENDEREÇO DE FATURAMENTO:*%0A${encodeURIComponent(getField('rua-billing'))}, ${encodeURIComponent(getField('numero-billing'))} - ${encodeURIComponent(getField('bairro-billing'))}%0A${encodeURIComponent(getField('cidade-billing'))}/${encodeURIComponent(getField('estado-billing'))} - CEP: ${encodeURIComponent(getField('cep-billing'))}%0A`; }
-        msg += '%0A%0A_Mensagem enviada através do site._';
+        msg += `%0A%0A_Mensagem enviada através do site._`;
         return msg;
       }
-      
-      function validateForms() {
-          const formsToValidate = [customerForm, addressForm];
-          if (!sameAddress.checked) formsToValidate.push(billingForm);
-          document.querySelectorAll('input.border-red-500').forEach(el => el.classList.remove('border-red-500'));
-          let firstInvalid = null;
-          for (const form of formsToValidate) {
-              if (!form.checkValidity()) {
-                  for (const el of form.elements) {
-                      if (el.tagName === 'INPUT' && !el.checkValidity()) {
-                          el.classList.add('border-red-500');
-                          if(!firstInvalid) firstInvalid = el;
-                      }
-                  }
-              }
-          }
-          if(firstInvalid) { firstInvalid.focus(); return false; }
-          return true;
-      }
-      async function handleCheckout() {
-        if (!validateForms()) { await showAlert('Formulário Incompleto', 'Por favor, preencha todos os campos obrigatórios (*). Eles estão destacados para sua conveniência.'); return; }
-        if (!cart || cart.length === 0) { await showAlert('Carrinho Vazio', 'Seu carrinho está vazio. Adicione produtos para poder finalizar o orçamento.'); return; }
-        window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=${buildMessage()}`, '_blank');
+      async function handleCheckout(){
+        if(!validateForms()){
+          await showAlert('Formulário incompleto','Preencha todos os campos obrigatórios (*). Eles foram destacados para sua conveniência.');
+          return;
+        }
+        if(!cart || cart.length === 0){
+          await showAlert('Carrinho vazio','Seu carrinho está vazio. Adicione produtos para poder finalizar o orçamento.');
+          return;
+        }
+        window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=${buildMessage()}`,'_blank');
       }
       document.querySelectorAll('form input').forEach(input => { input.addEventListener('input', () => { if (input.checkValidity()) input.classList.remove('border-red-500'); }); });
       checkoutBtns.forEach(b => b && b.addEventListener('click', handleCheckout));
+      document.querySelectorAll('form input').forEach(i => i.addEventListener('input', ()=>{ if(i.checkValidity()) i.classList.remove('border-red-500'); }));
 
+      // Init
       document.getElementById('current-year').textContent = new Date().getFullYear();
       renderCart();
     });

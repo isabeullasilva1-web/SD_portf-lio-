@@ -6,224 +6,373 @@
   <title>SD Laser Desing — Troféus, Medalhas e Brindes Personalizados</title>
   <meta name="description" content="Troféus, medalhas e brindes personalizados. Design premium e pré-orçamento via WhatsApp." />
 
+  <!-- Tailwind -->
   <script src="https://cdn.tailwindcss.com"></script>
+
+  <!-- Tipografia -->
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Poppins:wght@600;700;800&display=swap" rel="stylesheet">
 
   <style>
     :root {
-      --brand: #2563EB;
-      --accent: #10B981;
-      --background: #f8fafc;
-      --card: #ffffff;
-      --text-primary: #1e293b;
-      --text-secondary: #64748b;
-      --border-color: #e2e8f0;
+      --brand: #2563EB;           /* Azul principal */
+      --brand-700: #1D4ED8;
+      --brand-900: #1E3A8A;
+      --accent: #10B981;          /* Verde para feedbacks (Whats e badges) */
+      --gold: #C8A45D;            /* Dourado discreto */
+      --background: #f8fafc;      /* slate-50 */
+      --card: #ffffff;            /* superfícies claras */
+      --text-primary: #0f172a;    /* slate-900 */
+      --text-secondary: #64748b;  /* slate-500 */
+      --border-color: #e2e8f0;    /* slate-200 */
     }
     html.dark {
-        --background: #0f172a;
-        --card: #1e293b;
-        --text-primary: #f1f5f9;
-        --text-secondary: #94a3b8;
-        --border-color: #334155;
+      --background: #0b1220;      /* próximo ao slate-950/900 */
+      --card: #0f172a;            /* slate-900 */
+      --text-primary: #e5eefb;    /* slate-100-ish */
+      --text-secondary: #94a3b8;  /* slate-400 */
+      --border-color: #1f2a3a;    /* slate-800/700 */
+      --brand: #3B82F6;           /* levemente mais vivo no dark */
+      --brand-700: #2563EB;
+      --brand-900: #1E40AF;
+      --gold: #D2B574;            /* dourado um tom mais vivo no dark */
     }
-    body { 
-        font-family: 'Inter', sans-serif; 
-        background-color: var(--background);
-        color: var(--text-primary);
-        -webkit-font-smoothing: antialiased;
-        -moz-osx-font-smoothing: grayscale;
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: var(--background);
+      color: var(--text-primary);
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
     }
     h1, h2, h3, h4 { font-family: 'Poppins', sans-serif; }
-    .card-surface { transition: transform 0.3s ease, box-shadow 0.3s ease; }
-    .card-surface:hover { transform: translateY(-8px); box-shadow: 0 20px 40px -10px rgba(0,0,0,0.1); }
-    .dark .card-surface:hover { box-shadow: 0 20px 40px -10px rgba(0,0,0,0.2); }
-    .reveal { opacity: 0; transform: translateY(20px); transition: opacity 0.6s ease-out, transform 0.6s ease-out; }
+
+    /* ====== Hero Premium Blue Clean ====== */
+    .hero-surface {
+      position: relative;
+      background:
+        radial-gradient(1200px 600px at 10% -10%, rgba(37, 99, 235, 0.10), transparent 55%),
+        radial-gradient(900px 500px at 100% 10%, rgba(29, 78, 216, 0.07), transparent 55%),
+        linear-gradient(180deg, var(--card), var(--card));
+    }
+    .dark .hero-surface {
+      background:
+        radial-gradient(1100px 520px at 0% -10%, rgba(59, 130, 246, 0.18), transparent 60%),
+        radial-gradient(800px 460px at 100% 0%, rgba(29, 78, 216, 0.16), transparent 60%),
+        linear-gradient(180deg, rgba(10,15,28,0.92), rgba(10,15,28,0.98));
+    }
+    
+    .header-surface {
+        background: color-mix(in srgb, var(--card) 80%, transparent);
+        backdrop-filter: blur(8px);
+    }
+
+    /* Linha premium sutil (ouro) */
+    .gold-sep {
+      height: 2px;
+      width: 56px;
+      background: linear-gradient(90deg, transparent, var(--gold), transparent);
+      border-radius: 9999px;
+      margin-inline: auto;
+    }
+
+    /* Cartões/links de categoria */
+    .card-surface {
+      transition: transform .35s cubic-bezier(.2,.8,.2,1), box-shadow .35s cubic-bezier(.2,.8,.2,1), border-color .25s ease;
+      border: 1px solid var(--border-color);
+      background: var(--card);
+    }
+    .card-surface:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 26px 50px -22px rgba(2, 6, 23, 0.22);
+      border-color: rgba(37, 99, 235, 0.30);
+    }
+    .dark .card-surface:hover {
+        box-shadow: 0 26px 50px -22px rgba(59, 130, 246, 0.25);
+    }
+    .dark .card-surface {
+      box-shadow: 0 18px 42px -24px rgba(0,0,0,0.55);
+    }
+    .category-overlay {
+      background: linear-gradient(180deg, rgba(2,6,23,0.68), rgba(2,6,23,0.06) 45%, rgba(2,6,23,0.76));
+    }
+    .category-title {
+      text-shadow: 0 4px 18px rgba(0,0,0,0.45);
+    }
+
+    /* CTA principal */
+    .btn-primary {
+      background: linear-gradient(180deg, var(--brand), var(--brand-700));
+      color: #fff;
+      border-radius: 0.9rem;
+      font-weight: 800;
+      padding: 0.9rem 1.25rem;
+      display: inline-flex; align-items: center; justify-content: center; gap: .6rem;
+      box-shadow: 0 18px 28px -16px rgba(37,99,235,0.55);
+      transition: transform .12s ease, filter .2s ease, box-shadow .25s ease;
+    }
+    .btn-primary:hover { filter: saturate(1.05) brightness(1.02); box-shadow: 0 22px 34px -18px rgba(37,99,235,0.66); transform: translateY(-1px); }
+    .btn-primary:active { transform: translateY(0); }
+
+    /* CTA secundário outline */
+    .btn-outline {
+      border: 1px solid var(--border-color);
+      color: var(--text-primary);
+      border-radius: 0.9rem;
+      padding: 0.9rem 1.25rem;
+      font-weight: 700;
+      transition: border-color .2s ease, background .2s ease, transform .12s ease;
+      background: color-mix(in srgb, var(--card) 60%, transparent);
+    }
+    .btn-outline:hover { border-color: var(--brand); background: rgba(37,99,235,0.06); transform: translateY(-1px); }
+    .dark .btn-outline { background: color-mix(in srgb, var(--card) 35%, transparent); }
+    .dark .btn-outline:hover { background: rgba(37,99,235,0.08); }
+
+    /* Revelar ao rolar */
+    .reveal { opacity: 0; transform: translateY(18px); transition: opacity .6s ease-out, transform .6s ease-out; }
     .reveal.visible { opacity: 1; transform: translateY(0); }
   </style>
 </head>
+
 <body class="antialiased">
 
-  <header class="bg-card/80 backdrop-blur-sm shadow-sm sticky top-0 z-50 border-b border-border-color">
+  <!-- HEADER -->
+  <header class="header-surface shadow-sm sticky top-0 z-50 border-b border-border-color">
     <nav class="container mx-auto px-4 sm:px-6 py-3 flex justify-between items-center">
-        <a href="index.html" class="flex items-center space-x-3">
-            <img src="src/img/1-Photoroom.png" alt="Logo SD Laser Design" class="h-12 w-12 rounded-full">
-            <span class="text-xl font-bold text-text-primary">SD Laser Desing</span>
+      <a href="index.html" class="flex items-center gap-3">
+        <img src="src/img/1-Photoroom.png" alt="Logo SD Laser Design" class="h-12 w-12 rounded-full">
+        <span class="text-xl font-bold text-text-primary">SD Laser Desing</span>
+      </a>
+
+      <div class="flex items-center gap-2 sm:gap-4">
+        <!-- Theme -->
+        <button id="themeToggle" class="p-2 rounded-full hover:bg-slate-200 dark:hover:bg-slate-700 transition-colors" aria-label="Alternar modo de cor">
+          <svg id="theme-icon-light" class="w-5 h-5 text-text-secondary" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"/></svg>
+          <svg id="theme-icon-dark" class="w-5 h-5 text-text-secondary hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"/></svg>
+        </button>
+
+        <!-- Cart -->
+        <a href="carrinho.html" id="cart-link" class="relative text-text-secondary hover:text-blue-600 transition p-2" aria-label="Abrir carrinho">
+          <svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 3h1.386c.51 0 .955.343 1.087.835l.383 1.437M7.5 14.25a3 3 0 00-3 3h15.75m-12.75-3h11.218c.51 0 .962-.344 1.087-.835l1.823-6.831a1.5 1.5 0 00-1.423-2.165H4.198M7.5 14.25h11.218M16.5 21a1.5 1.5 0 11-3 0 1.5 1.5 0 013 0zm-9 0a1.5 1.5 0 11-3 0 1.5 1.5 0 013 0z"/>
+          </svg>
+          <span id="cart-count" class="absolute -top-1 -right-1 bg-red-500 text-white text-xs w-5 h-5 rounded-full flex items-center justify-center border-2 border-white dark:border-slate-900">0</span>
         </a>
-        <div class="flex items-center space-x-2 sm:space-x-4">
-            <button id="themeToggle" class="p-2 rounded-full hover:bg-slate-200 dark:hover:bg-slate-700 transition-colors" aria-label="Alternar modo de cor">
-              <svg id="theme-icon-light" class="w-5 h-5 text-text-secondary" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"></path></svg>
-              <svg id="theme-icon-dark" class="w-5 h-5 text-text-secondary hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"></path></svg>
-            </button>
-            <a href="carrinho.html" id="cart-link" class="relative text-text-secondary hover:text-blue-600 transition p-2">
-                <svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
-                    <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 3h1.386c.51 0 .955.343 1.087.835l.383 1.437M7.5 14.25a3 3 0 00-3 3h15.75m-12.75-3h11.218c.51 0 .962-.344 1.087-.835l1.823-6.831a1.5 1.5 0 00-1.423-2.165H4.198M7.5 14.25h11.218M16.5 21a1.5 1.5 0 11-3 0 1.5 1.5 0 013 0zm-9 0a1.5 1.5 0 11-3 0 1.5 1.5 0 013 0z" />
-                </svg>
-                <span id="cart-count" class="absolute -top-1 -right-1 bg-red-500 text-white text-xs w-5 h-5 rounded-full flex items-center justify-center border-2 border-white">0</span>
-            </a>
-            <a href="#contato" class="hidden sm:inline-block bg-blue-600 text-white text-sm font-semibold px-4 py-2 rounded-lg hover:bg-blue-700 transition">Fale Conosco</a>
-        </div>
+
+        <a href="#contato" class="hidden sm:inline-flex btn-outline !py-2 !px-4 !text-sm">Fale Conosco</a>
+      </div>
     </nav>
   </header>
-  <!--Teste-->
 
+  <!-- HERO -->
   <main>
-      <section id="inicio" class="py-24 sm:py-32 bg-card">
-        <div class="container mx-auto px-4 sm:px-6">
-          <div class="max-w-3xl mx-auto text-center">
-            <div class="reveal">
-              <h1 class="text-4xl md:text-6xl font-extrabold text-text-primary leading-tight">Eternize Conquistas com Arte.</h1>
-              <p class="mt-6 text-lg text-text-secondary">Explore nossas categorias, monte seu pré-orçamento na nossa galeria de produtos e finalize os detalhes conosco diretamente no WhatsApp.</p>
-              <a href="#categorias" class="mt-8 inline-flex items-center gap-3 bg-blue-600 text-white px-8 py-3 rounded-lg shadow-lg text-lg font-bold transition-transform hover:scale-105">
-                Ver Categorias
-                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
-              </a>
+    <section id="inicio" class="py-24 sm:py-32 hero-surface border-b border-border-color">
+      <div class="container mx-auto px-4 sm:px-6">
+        <div class="max-w-3xl mx-auto text-center reveal">
+          <h1 class="text-4xl md:text-6xl font-extrabold text-text-primary leading-tight tracking-tight">
+            Eternize Conquistas com Arte.
+          </h1>
+          <div class="gold-sep mt-5"></div>
+          <p class="mt-6 text-lg text-text-secondary">
+            Explore nossas categorias, monte seu pré-orçamento na galeria e finalize os detalhes diretamente pelo WhatsApp.
+          </p>
+          <div class="mt-8 flex items-center justify-center gap-3">
+            <a href="#categorias" class="btn-primary text-base">
+              Ver Categorias
+              <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7-7 7M3 12h18"/></svg>
+            </a>
+            <a href="trofeus.html" class="btn-outline text-base">Galeria de Troféus</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CATEGORIAS -->
+    <section id="categorias" class="py-20 sm:py-24">
+      <div class="container mx-auto px-4 sm:px-6">
+        <div class="text-center mb-12 reveal">
+          <h2 class="text-3xl md:text-4xl font-bold">Nossas Categorias</h2>
+          <p class="mt-4 max-w-2xl mx-auto text-text-secondary">
+            Do esportivo ao corporativo, temos a solução ideal para cada ocasião.
+          </p>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+          <!-- Troféus -->
+          <a href="trofeus.html" class="group relative block h-80 overflow-hidden rounded-2xl card-surface reveal">
+            <img src="src/img/trofeu de futebol.jpg" alt="Troféus Esportivos" class="absolute inset-0 h-full w-full object-cover transition-transform duration-500 group-hover:scale-110" />
+            <div class="absolute inset-0 category-overlay"></div>
+            <div class="relative flex flex-col h-full items-start justify-end p-6">
+              <h3 class="text-2xl font-bold text-white category-title">Troféus Esportivos</h3>
+              <div class="h-0.5 w-12 mt-2" style="background: linear-gradient(90deg, transparent, var(--gold), transparent);"></div>
+              <p class="mt-2 text-sm text-gray-200">Designs para celebrar o espírito competitivo.</p>
             </div>
-          </div>
-        </div>
-      </section>
+          </a>
 
-      <section id="categorias" class="py-20 sm:py-24">
-        <div class="container mx-auto px-4 sm:px-6">
-          <div class="text-center mb-12 reveal">
-            <h2 class="text-3xl md:text-4xl font-bold">Nossas Categorias</h2>
-            <p class="mt-4 max-w-2xl mx-auto text-text-secondary">Do esportivo ao corporativo, temos a solução ideal para cada ocasião.</p>
-          </div>
-          <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
-              <a href="trofeus.html" class="group relative block h-80 overflow-hidden rounded-2xl shadow-lg card-surface reveal">
-                  <img src="src/img/trofeu de futebol.jpg" alt="Troféus Esportivos" class="absolute inset-0 h-full w-full object-cover transition-transform duration-500 group-hover:scale-110" />
-                  <div class="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent"></div>
-                  <div class="relative flex flex-col h-full items-start justify-end p-6">
-                      <h3 class="text-2xl font-bold text-white">Troféus Esportivos</h3>
-                      <p class="mt-1 text-sm text-gray-200">Designs para celebrar o espírito competitivo.</p>
-                  </div>
-              </a>
-              <a href="corporativa.html" class="group relative block h-80 overflow-hidden rounded-2xl shadow-lg card-surface reveal">
-                  <img src="src/img/corporativa 1.jpg" alt="Premiações Corporativas" class="absolute inset-0 h-full w-full object-cover transition-transform duration-500 group-hover:scale-110" />
-                  <div class="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent"></div>
-                  <div class="relative flex flex-col h-full items-start justify-end p-6">
-                      <h3 class="text-2xl font-bold text-white">Premiações Corporativas</h3>
-                      <p class="mt-1 text-sm text-gray-200">Reconheça o talento da sua equipe.</p>
-                  </div>
-              </a>
-              <a href="medalhas.html" class="group relative block h-80 overflow-hidden rounded-2xl shadow-lg card-surface reveal">
-                  <img src="src/img/medalha 1.jpg" alt="Medalhas Personalizadas" class="absolute inset-0 h-full w-full object-cover transition-transform duration-500 group-hover:scale-110" />
-                  <div class="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent"></div>
-                  <div class="relative flex flex-col h-full items-start justify-end p-6">
-                      <h3 class="text-2xl font-bold text-white">Medalhas Personalizadas</h3>
-                      <p class="mt-1 text-sm text-gray-200">Celebre cada conquista com design único.</p>
-                  </div>
-              </a>
-              <a href="comunicacao.html" class="group relative block h-80 overflow-hidden rounded-2xl shadow-lg card-surface reveal">
-                  <img src="src/img/comunicação 1.jpg" alt="Medalhas Personalizadas" class="absolute inset-0 h-full w-full object-cover transition-transform duration-500 group-hover:scale-110" />
-                  <div class="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent"></div>
-                  <div class="relative flex flex-col h-full items-start justify-end p-6">
-                      <h3 class="text-2xl font-bold text-white">Comunicação</h3>
-                      <p class="mt-1 text-sm text-gray-200">Celebre cada conquista com design único.</p>
-                  </div>
-              </a>
-              <a href="brindes.html" class="group relative block h-80 overflow-hidden rounded-2xl shadow-lg card-surface reveal">
-                  <img src="src/img/chaveiro 1.jpg" alt="Medalhas Personalizadas" class="absolute inset-0 h-full w-full object-cover transition-transform duration-500 group-hover:scale-110" />
-                  <div class="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent"></div>
-                  <div class="relative flex flex-col h-full items-start justify-end p-6">
-                      <h3 class="text-2xl font-bold text-white">Brindes Personalizados</h3>
-                      <p class="mt-1 text-sm text-gray-200">Celebre cada conquista com design único.</p>
-                  </div>
-              </a>
-              <a href="decoracao.html" class="group relative block h-80 overflow-hidden rounded-2xl shadow-lg card-surface reveal">
-                  <img src="src/img/decoração 1.jpg" alt="Medalhas Personalizadas" class="absolute inset-0 h-full w-full object-cover transition-transform duration-500 group-hover:scale-110" />
-                  <div class="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent"></div>
-                  <div class="relative flex flex-col h-full items-start justify-end p-6">
-                      <h3 class="text-2xl font-bold text-white">Decoração</h3>
-                      <p class="mt-1 text-sm text-gray-200">Celebre cada conquista com design único.</p>
-                  </div>
-              </a>
-          </div>
-        </div>
-      </section>
+          <!-- Corporativo -->
+          <a href="corporativa.html" class="group relative block h-80 overflow-hidden rounded-2xl card-surface reveal">
+            <img src="src/img/corporativa 1.jpg" alt="Premiações Corporativas" class="absolute inset-0 h-full w-full object-cover transition-transform duration-500 group-hover:scale-110" />
+            <div class="absolute inset-0 category-overlay"></div>
+            <div class="relative flex flex-col h-full items-start justify-end p-6">
+              <h3 class="text-2xl font-bold text-white category-title">Premiações Corporativas</h3>
+              <div class="h-0.5 w-12 mt-2" style="background: linear-gradient(90deg, transparent, var(--gold), transparent);"></div>
+              <p class="mt-2 text-sm text-gray-200">Reconheça o talento da sua equipe.</p>
+            </div>
+          </a>
 
-      <section id="sobre" class="py-20 sm:py-24 bg-card">
-        <div class="container mx-auto px-4 sm:px-6 flex flex-col-reverse lg:flex-row items-center gap-12">
-          <div class="lg:w-1/2 reveal">
-            <img src="src/img/SD.png" alt="Logo SD Laser" class="rounded-2xl shadow-xl w-full max-w-md mx-auto">
-          </div>
-          <div class="lg:w-1/2 reveal text-center lg:text-left">
-            <h2 class="text-3xl font-bold mb-4">Paixão em Cada Detalhe</h2>
-            <p class="text-text-secondary text-lg mb-6">Na SD Laser Design, combinamos tecnologia de ponta e cuidado artesanal para criar peças que representam histórias e conquistas. Cada produto é uma obra de arte, feita para durar e inspirar.</p>
-            <a href="Sobrenos.html" class="font-bold text-blue-600 hover:underline">Conheça nossa história &rarr;</a>
-          </div>
-        </div>
-      </section>
+          <!-- Medalhas -->
+          <a href="medalhas.html" class="group relative block h-80 overflow-hidden rounded-2xl card-surface reveal">
+            <img src="src/img/medalha 1.jpg" alt="Medalhas Personalizadas" class="absolute inset-0 h-full w-full object-cover transition-transform duration-500 group-hover:scale-110" />
+            <div class="absolute inset-0 category-overlay"></div>
+            <div class="relative flex flex-col h-full items-start justify-end p-6">
+              <h3 class="text-2xl font-bold text-white category-title">Medalhas Personalizadas</h3>
+              <div class="h-0.5 w-12 mt-2" style="background: linear-gradient(90deg, transparent, var(--gold), transparent);"></div>
+              <p class="mt-2 text-sm text-gray-200">Celebre cada conquista com design único.</p>
+            </div>
+          </a>
 
-      <section id="contato" class="py-20 sm:py-24">
-        <div class="container mx-auto px-4 sm:px-6 text-center">
-          <div class="max-w-2xl mx-auto reveal">
-              <h2 class="text-3xl font-bold mb-4">Pronto para começar?</h2>
-              <p class="text-text-secondary text-lg mb-8">Visite nossa galeria para montar seu pré-orçamento ou fale conosco diretamente no WhatsApp para um atendimento personalizado.</p>
-              <a href="https://wa.me/5519997255040?text=Olá!%20Vi%20o%20site%20da%20SD%20Laser%20Design%20e%20gostaria%20de%20um%20orçamento." class="inline-flex items-center gap-3 bg-green-500 px-8 py-3 rounded-full text-white font-bold shadow-lg text-lg transition-transform hover:scale-105">
-                  <svg class="w-6 h-6" viewBox="0 0 24 24" fill="currentColor"><path d="M16.28 14.53c-.28-.14-1.67-.82-1.92-.92-.25-.09-.44-.14-.62.14-.18.28-.72.92-.88 1.1-.16.18-.32.2-.59.06-.27-.14-1.15-.42-2.19-1.35-.81-.73-1.35-1.63-1.5-1.92-.14-.28-.02-.44.13-.58.13-.13.28-.32.42-.48.14-.16.18-.28.28-.46.09-.18.05-.37-.02-.51s-.62-1.5-.85-2.07c-.23-.57-.46-.49-.62-.5-.16-.02-.34-.02-.53-.02-.18 0-.48.07-.72.35-.25.28-.96.94-1.18 2.22-.22 1.28.66 2.71 1.53 3.65 1.05 1.12 2.33 2.05 4.3 2.86.39.16.7.25.96.32.48.12.92.1.92.1.28 0 .82-.12 1.1-.68.28-.57.28-1.05.2-1.15s-.2-.18-.46-.32zM12 2.04c-5.5 0-9.96 4.46-9.96 9.96 0 1.77.46 3.45 1.28 4.9L2 22l5.25-1.38c1.4.74 2.98 1.18 4.75 1.18h.01c5.5 0 9.96-4.46 9.96-9.96s-4.46-9.96-9.96-9.96z"/></svg>
-                  <span>Conversar no WhatsApp</span>
-              </a>
+          <!-- Comunicação -->
+          <a href="comunicacao.html" class="group relative block h-80 overflow-hidden rounded-2xl card-surface reveal">
+            <img src="src/img/comunicação 1.jpg" alt="Comunicação Visual" class="absolute inset-0 h-full w-full object-cover transition-transform duration-500 group-hover:scale-110" />
+            <div class="absolute inset-0 category-overlay"></div>
+            <div class="relative flex flex-col h-full items-start justify-end p-6">
+              <h3 class="text-2xl font-bold text-white category-title">Comunicação</h3>
+              <div class="h-0.5 w-12 mt-2" style="background: linear-gradient(90deg, transparent, var(--gold), transparent);"></div>
+              <p class="mt-2 text-sm text-gray-200">Sinalização e peças personalizadas.</p>
+            </div>
+          </a>
+
+          <!-- Brindes -->
+          <a href="brindes.html" class="group relative block h-80 overflow-hidden rounded-2xl card-surface reveal">
+            <img src="src/img/chaveiro 1.jpg" alt="Brindes Personalizados" class="absolute inset-0 h-full w-full object-cover transition-transform duration-500 group-hover:scale-110" />
+            <div class="absolute inset-0 category-overlay"></div>
+            <div class="relative flex flex-col h-full items-start justify-end p-6">
+              <h3 class="text-2xl font-bold text-white category-title">Brindes Personalizados</h3>
+              <div class="h-0.5 w-12 mt-2" style="background: linear-gradient(90deg, transparent, var(--gold), transparent);"></div>
+              <p class="mt-2 text-sm text-gray-200">Marcantes e sob medida.</p>
+            </div>
+          </a>
+
+          <!-- Decoração -->
+          <a href="decoracao.html" class="group relative block h-80 overflow-hidden rounded-2xl card-surface reveal">
+            <img src="src/img/decoração 1.jpg" alt="Decoração Personalizada" class="absolute inset-0 h-full w-full object-cover transition-transform duration-500 group-hover:scale-110" />
+            <div class="absolute inset-0 category-overlay"></div>
+            <div class="relative flex flex-col h-full items-start justify-end p-6">
+              <h3 class="text-2xl font-bold text-white category-title">Decoração</h3>
+              <div class="h-0.5 w-12 mt-2" style="background: linear-gradient(90deg, transparent, var(--gold), transparent);"></div>
+              <p class="mt-2 text-sm text-gray-200">Ambientes com identidade.</p>
+            </div>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- SOBRE -->
+    <section id="sobre" class="py-20 sm:py-24 bg-card border-y border-border-color">
+      <div class="container mx-auto px-4 sm:px-6 flex flex-col-reverse lg:flex-row items-center gap-12">
+        <div class="lg:w-1/2 reveal">
+          <img src="src/img/SD.png" alt="Logo SD Laser" class="rounded-2xl shadow-xl w-full max-w-md mx-auto border border-border-color">
+        </div>
+        <div class="lg:w-1/2 reveal text-center lg:text-left">
+          <h2 class="text-3xl md:text-4xl font-bold">Paixão em Cada Detalhe</h2>
+          <div class="gold-sep mt-4 mb-5 lg:mx-0"></div>
+          <p class="text-text-secondary text-lg mb-6">
+            Na SD Laser Design, combinamos tecnologia de ponta e cuidado artesanal para criar peças que representam histórias e conquistas. Cada produto é uma obra de arte, feita para durar e inspirar.
+          </p>
+          <a href="Sobrenos.html" class="font-bold text-blue-600 hover:underline">Conheça nossa história &rarr;</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- CONTATO -->
+    <section id="contato" class="py-20 sm:py-24">
+      <div class="container mx-auto px-4 sm:px-6 text-center">
+        <div class="max-w-2xl mx-auto reveal">
+          <h2 class="text-3xl md:text-4xl font-bold">Pronto para começar?</h2>
+          <div class="gold-sep mt-4 mb-5"></div>
+          <p class="text-text-secondary text-lg mb-8">
+            Visite nossa galeria para montar seu pré-orçamento ou fale conosco diretamente no WhatsApp para um atendimento personalizado.
+          </p>
+          <div class="flex items-center justify-center gap-3 flex-wrap">
+            <a href="trofeus.html" class="btn-outline text-base">Abrir Galeria</a>
+            <a href="https://wa.me/5519997255040?text=Olá!%20Vi%20o%20site%20da%20SD%20Laser%20Design%20e%20gostaria%20de%20um%20orçamento." class="inline-flex items-center gap-3 bg-green-500 px-8 py-3 rounded-full text-white font-bold shadow-lg text-base transition-transform hover:scale-105">
+              <svg class="w-6 h-6" viewBox="0 0 24 24" fill="currentColor"><path d="M16.28 14.53c-.28-.14-1.67-.82-1.92-.92-.25-.09-.44-.14-.62.14-.18.28-.72.92-.88 1.1-.16.18-.32.2-.59.06-.27-.14-1.15-.42-2.19-1.35-.81-.73-1.35-1.63-1.5-1.92-.14-.28-.02-.44.13-.58.13-.13.28-.32.42-.48.14-.16.18-.28.28-.46.09-.18.05-.37-.02-.51s-.62-1.5-.85-2.07c-.23-.57-.46-.49-.62-.5-.16-.02-.34-.02-.53-.02-.18 0-.48.07-.72.35-.25.28-.96.94-1.18 2.22-.22 1.28.66 2.71 1.53 3.65 1.05 1.12 2.33 2.05 4.3 2.86.39.16.7.25.96.32.48.12.92.1.92.1.28 0 .82-.12 1.1-.68.28-.57.28-1.05.2-1.15s-.2-.18-.46-.32zM12 2.04c-5.5 0-9.96 4.46-9.96 9.96 0 1.77.46 3.45 1.28 4.9L2 22l5.25-1.38c1.4.74 2.98 1.18 4.75 1.18h.01c5.5 0 9.96-4.46 9.96-9.96s-4.46-9.96-9.96-9.96z"/></svg>
+              <span>Conversar no WhatsApp</span>
+            </a>
           </div>
         </div>
-      </section>
+      </div>
+    </section>
   </main>
-  
+
+  <!-- FOOTER -->
   <footer class="bg-card border-t border-border-color py-6 text-center text-sm text-text-secondary">
     © <span id="year"></span> SD Laser Design — Todos os direitos reservados.
   </footer>
-  
+
+  <!-- FAB WhatsApp -->
   <a href="https://wa.me/5519997255040?text=Olá!%20Vi%20o%20site%20da%20SD%20Laser%20Design%20e%20gostaria%20de%20um%20orçamento." target="_blank" rel="noopener noreferrer" class="fixed bottom-6 right-6 z-40 flex items-center justify-center h-14 w-14 bg-green-500 rounded-full shadow-lg transition-transform hover:scale-110" aria-label="Fale Conosco no WhatsApp">
-      <svg class="w-8 h-8 text-white" fill="currentColor" viewBox="0 0 24 24"><path d="M16.28 14.53c-.28-.14-1.67-.82-1.92-.92-.25-.09-.44-.14-.62.14-.18.28-.72.92-.88 1.1-.16.18-.32.2-.59.06-.27-.14-1.15-.42-2.19-1.35-.81-.73-1.35-1.63-1.5-1.92-.14-.28-.02-.44.13-.58.13-.13.28-.32.42-.48.14-.16.18-.28.28-.46.09-.18.05-.37-.02-.51s-.62-1.5-.85-2.07c-.23-.57-.46-.49-.62-.5-.16-.02-.34-.02-.53-.02-.18 0-.48.07-.72.35-.25.28-.96.94-1.18 2.22-.22 1.28.66 2.71 1.53 3.65 1.05 1.12 2.33 2.05 4.3 2.86.39.16.7.25.96.32.48.12.92.1.92.1.28 0 .82-.12 1.1-.68.28-.57.28-1.05.2-1.15s-.2-.18-.46-.32zM12 2.04c-5.5 0-9.96 4.46-9.96 9.96 0 1.77.46 3.45 1.28 4.9L2 22l5.25-1.38c1.4.74 2.98 1.18 4.75 1.18h.01c5.5 0 9.96-4.46 9.96-9.96s-4.46-9.96-9.96-9.96z"/></svg>
+    <svg class="w-8 h-8 text-white" fill="currentColor" viewBox="0 0 24 24"><path d="M16.28 14.53c-.28-.14-1.67-.82-1.92-.92-.25-.09-.44-.14-.62.14-.18.28-.72.92-.88 1.1-.16.18-.32.2-.59.06-.27-.14-1.15-.42-2.19-1.35-.81-.73-1.35-1.63-1.5-1.92-.14-.28-.02-.44.13-.58.13-.13.28-.32.42-.48.14-.16.18-.28.28-.46.09-.18.05-.37-.02-.51s-.62-1.5-.85-2.07c-.23-.57-.46-.49-.62-.5-.16-.02-.34-.02-.53-.02-.18 0-.48.07-.72.35-.25.28-.96.94-1.18 2.22-.22 1.28.66 2.71 1.53 3.65 1.05 1.12 2.33 2.05 4.3 2.86.39.16.7.25.96.32.48.12.92.1.92.1.28 0 .82-.12 1.1-.68.28-.57.28-1.05.2-1.15s-.2-.18-.46-.32zM12 2.04c-5.5 0-9.96 4.46-9.96 9.96 0 1.77.46 3.45 1.28 4.9L2 22l5.25-1.38c1.4.74 2.98 1.18 4.75 1.18h.01c5.5 0 9.96-4.46 9.96-9.96s-4.46-9.96-9.96-9.96z"/></svg>
   </a>
 
+  <!-- Script -->
   <script>
     document.addEventListener('DOMContentLoaded', () => {
-        // --- Theme Toggle ---
-        const themeToggle = document.getElementById('themeToggle');
-        const lightIcon = document.getElementById('theme-icon-light');
-        const darkIcon = document.getElementById('theme-icon-dark');
-        const applyTheme = (theme) => {
-            if (theme === 'dark') {
-                document.documentElement.classList.add('dark');
-                lightIcon.classList.add('hidden');
-                darkIcon.classList.remove('hidden');
-            } else {
-                document.documentElement.classList.remove('dark');
-                lightIcon.classList.remove('hidden');
-                darkIcon.classList.add('hidden');
-            }
-        };
-        themeToggle.addEventListener('click', () => {
-            const newTheme = document.documentElement.classList.contains('dark') ? 'light' : 'dark';
-            localStorage.setItem('theme', newTheme);
-            applyTheme(newTheme);
-        });
-        applyTheme(localStorage.getItem('theme') || (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'));
+      // --- Theme Toggle ---
+      const themeToggle = document.getElementById('themeToggle');
+      const lightIcon = document.getElementById('theme-icon-light');
+      const darkIcon = document.getElementById('theme-icon-dark');
 
-        // --- Scroll Animations ---
-        const revealObserver = new IntersectionObserver(entries => {
-            entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                entry.target.classList.add('visible');
-                revealObserver.unobserve(entry.target);
-            }
-            });
-        }, { threshold: 0.1 });
-        document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
-      
-        // --- Cart Counter ---
-        const cartCount = document.getElementById('cart-count');
-        const updateCartCounter = () => {
+      const applyTheme = (theme) => {
+        if (theme === 'dark') {
+          document.documentElement.classList.add('dark');
+          lightIcon.classList.add('hidden');
+          darkIcon.classList.remove('hidden');
+        } else {
+          document.documentElement.classList.remove('dark');
+          lightIcon.classList.remove('hidden');
+          darkIcon.classList.add('hidden');
+        }
+      };
+      themeToggle.addEventListener('click', () => {
+        const newTheme = document.documentElement.classList.contains('dark') ? 'light' : 'dark';
+        localStorage.setItem('theme', newTheme);
+        applyTheme(newTheme);
+      });
+      // Aplica o tema salvo ou o padrão do sistema
+      applyTheme(localStorage.getItem('theme') || (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'));
+
+      // --- Scroll Reveal ---
+      const revealObserver = new IntersectionObserver((entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('visible');
+            revealObserver.unobserve(entry.target);
+          }
+        });
+      }, { threshold: 0.1 });
+      document.querySelectorAll('.reveal').forEach((el) => revealObserver.observe(el));
+
+      // --- Cart Counter (coerente com Galeria) ---
+      const cartCount = document.getElementById('cart-count');
+      const updateCartCounter = () => {
+        try {
             const cart = JSON.parse(localStorage.getItem('sdCart')) || [];
             const totalItems = cart.reduce((sum, item) => sum + (item.quantity || 0), 0);
             cartCount.textContent = totalItems;
             cartCount.classList.toggle('hidden', totalItems === 0);
-        };
+        } catch (e) {
+            console.error("Erro ao ler o carrinho do localStorage:", e);
+            localStorage.removeItem('sdCart'); // Limpa o carrinho se estiver corrompido
+            cartCount.textContent = 0;
+            cartCount.classList.add('hidden');
+        }
+      };
 
-        // --- Initial Calls ---
-        document.getElementById('year').textContent = new Date().getFullYear();
-        updateCartCounter();
-        window.addEventListener('storage', updateCartCounter); // Listen for changes from other tabs
+      // --- Init ---
+      document.getElementById('year').textContent = new Date().getFullYear();
+      updateCartCounter();
+      // Atualiza o contador se outra aba modificar o carrinho
+      window.addEventListener('storage', updateCartCounter);
     });
   </script>
 </body>
